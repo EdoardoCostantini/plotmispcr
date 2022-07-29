@@ -2,7 +2,7 @@
 # Objective: TODO
 # Author:    Edoardo Costantini
 # Created:   2022-07-27
-# Modified:  2022-07-27
+# Modified:  2022-07-28
 
 library(shiny)
 library(ggplot2)
@@ -18,7 +18,6 @@ grid_x_axis <- "mech"
 grid_y_axis <- "pm"
 
 ui <- fluidPage(
-  titlePanel("Plotting results for study"),
   sidebarLayout(
     sidebarPanel(
       selectInput("nla",
@@ -44,12 +43,12 @@ ui <- fluidPage(
                   choices = c("RB", "PRB", "coverage", "CIW_avg", "mcsd")),
       checkboxGroupInput("method", "Imputation methods to compare:",
                          choices = levels(gg_shape$method),
-                         selected = levels(gg_shape$method)),
+                         selected = levels(gg_shape$method)[1:4]),
       shinyWidgets::sliderTextInput(inputId = "npcs",
                                     label = "Number of principal components",
                                     hide_min_max = TRUE,
                                     choices = sort(unique(gg_shape$npcs)),
-                                    selected = max(unique(gg_shape$npcs)),
+                                    selected = range(gg_shape$npcs),
                                     grid = TRUE),
     ),
     mainPanel(

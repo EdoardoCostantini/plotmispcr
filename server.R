@@ -2,7 +2,7 @@
 # Objective: TODO
 # Author:    Edoardo Costantini
 # Created:   2022-07-27
-# Modified:  2022-07-27
+# Modified:  2022-07-28
 
 library(shiny)
 library(ggplot2)
@@ -40,20 +40,23 @@ server <- function(input, output, session) {
     shinyWidgets::updateSliderTextInput(session,
                                         inputId = "npcs",
                                         choices = npcs_to_plot,
-                                        selected = max(npcs_to_plot))
+                                        selected = range(npcs_to_plot))
   })
 
   output$plot <- renderPlot(
     res = 96,
   {
     gg_shape %>%
-      filter(nla == input$nla,
-             mech %in% input$mech,
-             pm %in% input$pm,
-             vars == input$vars,
-             stat == input$stat,
-             method %in% input$method,
-             npcs <= input$npcs) %>%
+      filter(
+        nla == input$nla,
+        mech %in% input$mech,
+        pm %in% input$pm,
+        vars == input$vars,
+        stat == input$stat,
+        method %in% input$method,
+        npcs <= input$npcs[2],
+        npcs >= input$npcs[1]
+      ) %>%
       ggplot(aes_string(x = plot_x_axis,
                         y = input$plot_y_axis,
                         group = moderator)) +
@@ -71,6 +74,7 @@ server <- function(input, output, session) {
         strip.text.y.right = element_text(angle = 0),
         plot.title = element_text(hjust = 0.5),
         axis.title = element_text(size = 10),
+        axis.title.x = element_blank(),
         # Legend
         legend.title = element_blank(),
         legend.position = "bottom",
