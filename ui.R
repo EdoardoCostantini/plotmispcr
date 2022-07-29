@@ -9,7 +9,7 @@ library(ggplot2)
 library(shinyWidgets)
 library(dplyr)
 
-gg_shape <- readRDS("./20220726-143214-small-run-for-plot-development-pc-main-res.rds")
+gg_shape <- readRDS("./20220728-185933-check-pcr-spcr-work-pc-main-res.rds")
 
 plot_x_axis <- "npcs"
 plot_y_axis <- "coverage"
