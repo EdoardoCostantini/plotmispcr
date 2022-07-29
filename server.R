@@ -1,5 +1,5 @@
 # Project:   mi-spcr
-# Objective: TODO
+# Objective: back end
 # Author:    Edoardo Costantini
 # Created:   2022-07-27
 # Modified:  2022-07-28

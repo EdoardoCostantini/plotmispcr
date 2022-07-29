@@ -1,5 +1,5 @@
 # Project:   shiny-mi-spcr-plot
-# Objective: TODO
+# Objective: user interface
 # Author:    Edoardo Costantini
 # Created:   2022-07-27
 # Modified:  2022-07-28
