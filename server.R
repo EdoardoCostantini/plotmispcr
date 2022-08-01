@@ -2,7 +2,7 @@
 # Objective: back end
 # Author:    Edoardo Costantini
 # Created:   2022-07-27
-# Modified:  2022-07-28
+# Modified:  2022-08-01
 
 library(shiny)
 library(ggplot2)
@@ -31,6 +31,14 @@ server <- function(input, output, session) {
       updateSelectInput(session,
                         "vars",
                         choices = unique(gg_shape$vars)[4:6]
+      )
+    }
+
+    # Width of page
+    if(shinybrowser::get_width() < 768){
+      updateCheckboxGroupInput(session,
+                               inputId = "mech",
+                               selected = levels(gg_shape$mech)[2]
       )
     }
 

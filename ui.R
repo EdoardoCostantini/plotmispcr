@@ -2,12 +2,13 @@
 # Objective: user interface
 # Author:    Edoardo Costantini
 # Created:   2022-07-27
-# Modified:  2022-07-28
+# Modified:  2022-08-01
 
 library(shiny)
 library(ggplot2)
 library(shinyWidgets)
 library(dplyr)
+library(shinybrowser) # web browser information in Shiny apps
 
 gg_shape <- readRDS("./20220728-185933-check-pcr-spcr-work-pc-main-res.rds")
 
@@ -53,6 +54,8 @@ ui <- fluidPage(
     ),
     mainPanel(
       plotOutput("plot", height = "800px")
-    )
-  )
+    ),
+  ),
+  # Silent extraction of size
+  shinybrowser::detect(),
 )
