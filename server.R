@@ -23,14 +23,16 @@ server <- function(input, output, session) {
   observe({
     # Statistics and Variables requested
     if(any(input$stat %in% c("cor", "cov"))){
-      updateSelectInput(session,
-                        "vars",
-                        choices = unique(gg_shape$vars)[1:3]
+      updateRadioButtons(session,
+                         "vars",
+                         inline = TRUE,
+                         choices = unique(gg_shape$vars)[1:3]
       )
     } else {
-      updateSelectInput(session,
-                        "vars",
-                        choices = unique(gg_shape$vars)[4:6]
+      updateRadioButtons(session,
+                         "vars",
+                         inline = TRUE,
+                         choices = unique(gg_shape$vars)[4:6]
       )
     }
 
@@ -52,7 +54,7 @@ server <- function(input, output, session) {
   })
 
   output$plot <- renderPlot(
-    res = 96,
+    res = 96, height = 750,
   {
     gg_shape %>%
       filter(
