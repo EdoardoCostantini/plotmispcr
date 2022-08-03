@@ -2,7 +2,7 @@
 # Objective: back end
 # Author:    Edoardo Costantini
 # Created:   2022-07-27
-# Modified:  2022-08-01
+# Modified:  2022-08-03
 
 library(shiny)
 library(ggplot2)
@@ -71,7 +71,7 @@ server <- function(input, output, session) {
                         y = input$plot_y_axis,
                         group = moderator)) +
       geom_point(aes_string(shape = moderator), size = 1.5) +
-      geom_line(aes_string(lines = moderator)) +
+      geom_line() +
       scale_x_continuous(breaks = sort(unique(gg_shape$npcs)), sort(unique(gg_shape$npcs))) +
       facet_grid(reformulate(grid_x_axis,
                              grid_y_axis),
