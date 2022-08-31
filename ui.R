@@ -10,7 +10,7 @@ library(shinyWidgets)
 library(dplyr)
 library(shinybrowser) # web browser information in Shiny apps
 
-gg_shape <- readRDS("./20220805-214128-run-blade-200-pc-main-res.rds")
+gg_shape <- readRDS("./20220827-094950-run-lisa-9945538-9944296-9943298-main-res.rds")
 
 plot_x_axis <- "npcs"
 plot_y_axis <- "coverage"
@@ -20,59 +20,97 @@ grid_y_axis <- "pm"
 
 ui <- fluidPage(
   fluidRow(
-    column(4,
-           hr(),
-           h4("Data generation"),
-           radioButtons("nla",
-                        "Number of latent variables",
-                        choices = sort(unique(gg_shape$nla)),
-                        inline = TRUE),
-           checkboxGroupInput("pm",
-                              "Proportion of missing values",
-                              choices = sort(unique(gg_shape$pm)),
-                              selected = sort(unique(gg_shape$pm)),
-                              inline = TRUE),
-           checkboxGroupInput("mech",
-                              "Missing data mechanism",
-                              inline = TRUE,
-                              choices = levels(gg_shape$mech),
-                              selected = levels(gg_shape$mech)),
+
+    # Data generation ----------------------------------------------------------
+
+    column(
+      4,
+      hr(),
+      h4("Data generation"),
+      radioButtons("nla",
+        "Number of latent variables",
+        choices = sort(unique(gg_shape$nla)),
+        inline = TRUE
+      ),
+      checkboxGroupInput("pm",
+        "Proportion of missing values",
+        choices = sort(unique(gg_shape$pm)),
+        selected = sort(unique(gg_shape$pm)),
+        inline = TRUE
+      ),
+      checkboxGroupInput("mech",
+        "Missing data mechanism",
+        inline = TRUE,
+        choices = levels(gg_shape$mech),
+        selected = levels(gg_shape$mech)
+      ),
     ),
-    column(4,
-           hr(),
-           h4("Outcome measures"),
-           radioButtons("stat",
-                        "Statistic",
-                        inline = TRUE,
-                        choices = unique(gg_shape$stat)),
-           radioButtons("vars",
-                        "Variables",
-                        inline = TRUE,
-                        choices = unique(gg_shape$vars)),
-           selectInput("plot_y_axis",
-                       "Outcome measure",
-                       choices = c("RB", "PRB", "coverage", "CIW_avg", "mcsd")),
+
+    # Missing data treatments --------------------------------------------------
+
+    column(
+      4,
+      hr(),
+      h4("Missing data treatments"),
+      checkboxGroupInput("method",
+        "Imputation methods to compare:",
+        choices = levels(gg_shape$method),
+        selected = levels(gg_shape$method)[1:4],
+        inline = TRUE
+      ),
+      shinyWidgets::sliderTextInput(
+        inputId = "npcs",
+        label = "Number of principal components",
+        hide_min_max = TRUE,
+        choices = sort(unique(gg_shape$npcs)),
+        selected = range(gg_shape$npcs),
+        grid = TRUE
+      ),
     ),
-    column(4,
-           hr(),
-           h4("Missing data treatments"),
-           checkboxGroupInput("method",
-                              "Imputation methods to compare:",
-                              choices = levels(gg_shape$method),
-                              selected = levels(gg_shape$method)[1:4],
-                              inline = TRUE),
-           shinyWidgets::sliderTextInput(inputId = "npcs",
-                                         label = "Number of principal components",
-                                         hide_min_max = TRUE,
-                                         choices = sort(unique(gg_shape$npcs)),
-                                         selected = range(gg_shape$npcs),
-                                         grid = TRUE),
+
+    # Outcome measures ---------------------------------------------------------
+
+
+    column(
+      4,
+      hr(),
+      h4("Outcome measures"),
+      selectInput("plot_y_axis",
+        "Outcome measure",
+        choices = c("RB", "PRB", "coverage", "CIW_avg", "mcsd")
+      ),
+    ),
+    column(
+      2,
+      radioButtons("stat",
+        "Statistic",
+        inline = TRUE,
+        choices = unique(gg_shape$stat)
+      ),
+    ),
+    column(
+      2,
+      radioButtons("vars",
+        "Variables",
+        inline = TRUE,
+        choices = unique(gg_shape$vars)
+      ),
+    ),
+    column(
+      4,
+      shinyWidgets::sliderTextInput(
+        inputId = "yrange",
+        label = "Y-axis range",
+        hide_min_max = FALSE,
+        choices = 0:100,
+        selected = c(0, 10),
+        grid = FALSE
+      ),
     ),
   ),
-    hr(),
+  hr(),
+  plotOutput("plot"),
 
-    plotOutput('plot'),
-
-    # Silent extraction of size
-    shinybrowser::detect(),
+  # Silent extraction of size
+  shinybrowser::detect(),
 )
