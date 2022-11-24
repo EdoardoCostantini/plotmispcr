@@ -22,9 +22,8 @@ ui <- fluidPage(
   fluidRow(
 
     # Data generation ----------------------------------------------------------
-
     column(
-      4,
+      3,
       hr(),
       h4("Data generation"),
       radioButtons("nla",
@@ -49,7 +48,7 @@ ui <- fluidPage(
     # Missing data treatments --------------------------------------------------
 
     column(
-      4,
+      3,
       hr(),
       h4("Missing data treatments"),
       checkboxGroupInput("method",
@@ -70,34 +69,32 @@ ui <- fluidPage(
 
     # Outcome measures ---------------------------------------------------------
 
-
     column(
-      4,
+      3,
       hr(),
       h4("Outcome measures"),
       selectInput("plot_y_axis",
         "Outcome measure",
         choices = c("RB", "PRB", "coverage", "CIW_avg", "mcsd")
       ),
-    ),
-    column(
-      2,
       radioButtons("stat",
         "Statistic",
         inline = TRUE,
         choices = unique(gg_shape$stat)
       ),
-    ),
-    column(
-      2,
       radioButtons("vars",
         "Variables",
         inline = TRUE,
         choices = unique(gg_shape$vars)
       ),
     ),
+
+    # Zoom on y-axis -----------------------------------------------------------
+
     column(
-      4,
+      3,
+      hr(),
+      h4("Zoom on y-axis"),
       shinyWidgets::sliderTextInput(
         inputId = "yrange",
         label = "Y-axis range",
