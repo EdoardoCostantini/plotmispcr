@@ -110,8 +110,8 @@ grid_y_axis <- "pm"
             y = input$plot_y_axis,
             group = moderator
           )) +
-          geom_point(aes_string(shape = moderator), size = 1.5) +
-          geom_line() +
+          geom_line(col = "darkgray") +
+          geom_point(aes_string(shape = moderator), size = 2.5) +
           scale_x_continuous(breaks = sort(unique(gg_shape$npcs)), sort(unique(gg_shape$npcs))) +
           # Zoomable y-axis
           coord_cartesian(ylim = c(input$yrange[1], input$yrange[2])) +
