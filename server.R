@@ -9,7 +9,7 @@ library(ggplot2)
 library(shinyWidgets)
 library(dplyr)
 
-gg_shape <- readRDS("./20220827-094950-run-lisa-9945538-9944296-9943298-main-res.rds")
+gg_shape <- readRDS("./20221202-105949-results.rds")
 
 plot_x_axis <- "npcs"
 plot_y_axis <- "coverage"
