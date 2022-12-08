@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>readme</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="README_files/libs/clipboard/clipboard.min.js"></script>
+<script src="README_files/libs/quarto-html/quarto.js"></script>
+<script src="README_files/libs/quarto-html/popper.min.js"></script>
+<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="README_files/libs/quarto-html/anchor.min.js"></script>
+<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="README_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="README_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="shiny-app-mi-spcr-simulation-results-dashboard" class="level1">
+<h1>Shiny app: mi-spcr simulation results dashboard</h1>
+<p>This is a repository to host the <code>ui.R</code> and <code>server.R</code> and input file required by a shiny dashboard to dynamically sort through the results of the simulation study performed <a href="https://github.com/EdoardoCostantini/mi-spcr">here</a></p>
+<p>You may download this repository to build the app locally, or go <a href="https://edoardocostantini.github.io/publication/mi-super-pcr/">here</a> to look at it.</p>
+<p>You can interact with the results from the study <a href="https://github.com/EdoardoCostantini/mi-spcr">mi-pca</a> by:</p>
+<ul>
+<li><p>Visit the online <a href="https://edoardocostantini.shinyapps.io/plotmipca/">shiny app</a>.</p></li>
+<li><p>Installing this app locally as an R package:</p>
+<pre><code>devtools::install_github("https://github.com/EdoardoCostantini/----")</code></pre>
+<p>If you install the shiny app as a package, you can run it by simply typing:</p>
+<pre><code>plot.mi.spcr::startApp()</code></pre>
+<p>in your R console.</p></li>
+</ul>
+<p>The interface of the Shiny app allows you to change the values of the following simulation study experimental factors: - Number of latent variables used to generate the data (2, 10, 50) - Proportion of missing values imposed on every variable (0.1, 0.25, 0.5) - Missing data mechanism imposed (MCAR, MAR) - Imputation methods (see names in the interface)</p>
+<pre><code>- pcr: mice with principal component regression as univariate imputation method
+- spcr: mice with supervised principal component regression as univariate imputation method
+- plsr: mice with partial least squares regression as univariate imputation method
+- pcovr: mice with principal covariates regression as univariate imputation method
+- qp: mice with normal linear model with bootstrap as univariate imputation method and quickpred() used to select the predictors
+- am: mice with normal linear model with bootstrap as univariate imputation method and the analysis model variables used as predictors
+- all: mice with normal linear model with bootstrap as univariate imputation method and all available items used as predictors
+- cc: complete case analysis
+- fo: fully observed data (results if there had been no missing values)</code></pre>
+<ul>
+<li><p>Number of principal components (depending on the number of latent variables used)</p></li>
+<li><p>Outcome measure:</p>
+<ul>
+<li>RB: raw bias</li>
+<li>PRB: percent relative bias</li>
+<li>CIC: confidence interval coverage</li>
+<li>CIW: average confidence interval</li>
+<li>mcsd: Standard deviation of the estimate across the monte carlo simulations</li>
+</ul></li>
+<li><p>Statistic;</p>
+<ul>
+<li>cor: correlation between two items with missing values</li>
+<li>cov: covariance between two items with missing values</li>
+<li>cor: mean of an item with missing values</li>
+<li>cor: variance of an item with missing values</li>
+</ul></li>
+<li><p>Variables considered</p></li>
+<li><p>Zoom on the y-axis</p></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

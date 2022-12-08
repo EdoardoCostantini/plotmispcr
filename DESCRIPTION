@@ -1,0 +1,21 @@
+Package: plot.mi.spcr
+Title: Plot mi-spcr results
+Version: 1.0.0
+Authors@R: 
+    person("Edoardo", "Costantini", , "e.costantini@tilburguniversity.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9581-9913"))
+Description: A shiny app to interact with the results of the mi-spcr study.
+License: MIT
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.2
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Imports: 
+    dplyr,
+    ggplot2,
+    pkgload,
+    shiny,
+    shinybrowser,
+    shinyWidgets
