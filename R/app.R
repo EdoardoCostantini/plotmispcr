@@ -1,11 +1,11 @@
-# Project:   startApp
-# Objective: Function to run app
+# Project:   plot.mi.spcr
+# Objective: Function to run app to interact with simulation results
 # Author:    Edoardo Costantini
 # Created:   2022-12-08
-# Modified:  2022-12-08
+# Modified:  2022-12-16
 # Notes:
 
-#' startApp
+#' plotResults
 #'
 #' Starts a Shiny app to interact with the results of the \href{https://github.com/EdoardoCostantini/mi-spcr}{mi-spcr} project.
 #'
@@ -36,7 +36,7 @@
 #'      - CIW: average confidence interval
 #'      - mcsd: Standard deviation of the estimate across the monte carlo simulations 
 #' 
-#' - Statistic;
+#' - Statistic:
 #' 
 #'      - cor: correlation between two items with missing values
 #'      - cov: covariance between two items with missing values
@@ -53,10 +53,9 @@
 #' @import ggplot2
 #' @import shinyWidgets
 #' @import pkgload
-#' @examples startApp()
 #' @return Shiny app UI.
 #'
-startApp <- function(...) {
+plotResults <- function() {
     # Set up -------------------------------------------------------------------
 
     # Graph structure
@@ -263,7 +262,7 @@ startApp <- function(...) {
                     coord_cartesian(ylim = c(input$yrange[1], input$yrange[2])) +
                     # Facet grid
                     facet_grid(
-                        reformulate(
+                        stats::reformulate(
                             grid_x_axis,
                             grid_y_axis
                         ),
@@ -292,5 +291,5 @@ startApp <- function(...) {
 
     # Run app ------------------------------------------------------------------
 
-    shinyApp(ui, server, ...)
+    shinyApp(ui, server)
 }

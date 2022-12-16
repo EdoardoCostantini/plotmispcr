@@ -16,7 +16,7 @@ You can interact with the results from the study [mi-pca](https://github.com/Edo
     If you install the shiny app as a package, you can run it by simply typing:
 
     ```
-    plot.mi.spcr::startApp()
+    plot.mi.spcr::plotResults()
     ```
 
     in your R console.
