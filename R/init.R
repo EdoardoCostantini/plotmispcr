@@ -7,15 +7,15 @@
 # Prepare data -----------------------------------------------------------------
 
 # Data to plot
-ggshape <- readRDS("./data/20221202-105949-results.rds")
+dataResults <- readRDS("./data/20221202-105949-results.rds")
 
 # Make names of outcome variables prettier
-names(ggshape)[names(ggshape) == "coverage"] <- "CIC"
-names(ggshape)[names(ggshape) == "CIW_avg"] <- "CIW"
+names(dataResults)[names(dataResults) == "coverage"] <- "CIC"
+names(dataResults)[names(dataResults) == "CIW_avg"] <- "CIW"
 
 # Shiny dispatch ---------------------------------------------------------------
 
-usethis::use_data(ggshape, overwrite = TRUE)
+usethis::use_data(dataResults, overwrite = TRUE)
 
 # Document Data ----------------------------------------------------------------
 
@@ -49,7 +49,7 @@ usethis::use_data(ggshape, overwrite = TRUE)
 #'
 #' @docType data
 #' @keywords datasets
-#' @name ggshape
-#' @usage data(ggshape)
+#' @name dataResults
+#' @usage data(dataResults)
 #' @format A data frame with 53940 rows and 10 variables
 NULL

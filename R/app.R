@@ -77,20 +77,20 @@ plotResults <- function() {
                 h4("Data generation"),
                 radioButtons("nla",
                     "Number of latent variables",
-                    choices = sort(unique(ggshape$nla)),
+                    choices = sort(unique(dataResults$nla)),
                     inline = TRUE
                 ),
                 checkboxGroupInput("pm",
                     "Proportion of missing values",
-                    choices = sort(unique(ggshape$pm)),
-                    selected = sort(unique(ggshape$pm)),
+                    choices = sort(unique(dataResults$pm)),
+                    selected = sort(unique(dataResults$pm)),
                     inline = TRUE
                 ),
                 checkboxGroupInput("mech",
                     "Missing data mechanism",
                     inline = TRUE,
-                    choices = levels(ggshape$mech),
-                    selected = levels(ggshape$mech)
+                    choices = levels(dataResults$mech),
+                    selected = levels(dataResults$mech)
                 ),
             ),
 
@@ -102,16 +102,16 @@ plotResults <- function() {
                 h4("Missing data treatments"),
                 checkboxGroupInput("method",
                     "Imputation methods to compare:",
-                    choices = levels(ggshape$method),
-                    selected = levels(ggshape$method)[1:4],
+                    choices = levels(dataResults$method),
+                    selected = levels(dataResults$method)[1:4],
                     inline = TRUE
                 ),
                 shinyWidgets::sliderTextInput(
                     inputId = "npcs",
                     label = "Number of principal components",
                     hide_min_max = TRUE,
-                    choices = sort(unique(ggshape$npcs)),
-                    selected = range(ggshape$npcs),
+                    choices = sort(unique(dataResults$npcs)),
+                    selected = range(dataResults$npcs),
                     grid = TRUE
                 ),
             ),
@@ -129,12 +129,12 @@ plotResults <- function() {
                 radioButtons("stat",
                     "Statistic",
                     inline = TRUE,
-                    choices = unique(ggshape$stat)
+                    choices = unique(dataResults$stat)
                 ),
                 radioButtons("vars",
                     "Variables",
                     inline = TRUE,
-                    choices = unique(ggshape$vars)
+                    choices = unique(dataResults$vars)
                 ),
             ),
 
@@ -171,14 +171,14 @@ plotResults <- function() {
             if (shinybrowser::get_width() < 768) {
                 updateCheckboxGroupInput(session,
                     inputId = "mech",
-                    selected = levels(ggshape$mech)[2]
+                    selected = levels(dataResults$mech)[2]
                 )
             }
         })
 
         # Statistics and Variables requested
         observe({
-            choices_vars <- unique((ggshape %>% filter(stat == input$stat))$vars)
+            choices_vars <- unique((dataResults %>% filter(stat == input$stat))$vars)
 
             updateRadioButtons(session,
                 inputId = "vars",
@@ -191,7 +191,7 @@ plotResults <- function() {
         # Zoom on the y-axis
         observe({
             # Define subset of data in use
-            data_subset <- ggshape %>%
+            data_subset <- dataResults %>%
                 filter(
                     nla == input$nla,
                     mech %in% input$mech,
@@ -226,7 +226,7 @@ plotResults <- function() {
 
         # Number of components displayed by slider based on nla condition
         observe({
-            npcs_to_plot <- unique((ggshape %>% filter(nla == input$nla))$npcs)
+            npcs_to_plot <- unique((dataResults %>% filter(nla == input$nla))$npcs)
             npcs_to_plot <- sort(npcs_to_plot)
             shinyWidgets::updateSliderTextInput(session,
                 inputId = "npcs",
@@ -239,7 +239,7 @@ plotResults <- function() {
             res = 96,
             height = 750,
             {
-                ggshape %>%
+                dataResults %>%
                     filter(
                         nla == input$nla,
                         mech %in% input$mech,
@@ -257,7 +257,7 @@ plotResults <- function() {
                     )) +
                     geom_line(col = "darkgray") +
                     geom_point(aes_string(shape = moderator), size = 2.5) +
-                    scale_x_continuous(breaks = sort(unique(ggshape$npcs)), sort(unique(ggshape$npcs))) +
+                    scale_x_continuous(breaks = sort(unique(dataResults$npcs)), sort(unique(dataResults$npcs))) +
                     # Zoomable y-axis
                     coord_cartesian(ylim = c(input$yrange[1], input$yrange[2])) +
                     # Facet grid
