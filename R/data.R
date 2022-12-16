@@ -1,30 +1,8 @@
 # Project:   plot.mi.spcr
-# Objective: pre-process input data for actual use in shiny app
+# Objective: container for data documentation
 # Author:    Edoardo Costantini
 # Created:   2022-12-01
 # Modified:  2022-12-16
-
-# Prepare data -----------------------------------------------------------------
-
-# Data to plot
-dataResults <- readRDS("./data/20221202-105949-results.rds")
-dataMids <- readRDS("./data/20220729-104900-convergence-check.rds")
-
-# Make names of outcome variables prettier
-names(dataResults)[names(dataResults) == "coverage"] <- "CIC"
-names(dataResults)[names(dataResults) == "CIW_avg"] <- "CIW"
-
-# Change pls to plsr in the condition tags
-for(i in 1:length(names(dataMids$mids))){
-    names(dataMids$mids)[i] <- gsub("pls", "plsr", names(dataMids$mids)[i])
-}
-
-# Shiny dispatch ---------------------------------------------------------------
-
-usethis::use_data(dataResults, overwrite = TRUE)
-usethis::use_data(dataMids, overwrite = TRUE)
-
-# Document Data ----------------------------------------------------------------
 
 #' dataResults
 #' 
@@ -65,7 +43,7 @@ NULL
 
 #' dataMids
 #' 
-#' A list of mids objects and condition descriptions used to obtain the trace plots for desired conditions.
+#' A list of (simplified) mids objects and condition descriptions used to obtain the trace plots for desired conditions.
 #'
 #' @docType data
 #' @keywords datasets

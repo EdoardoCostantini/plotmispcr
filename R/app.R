@@ -325,18 +325,18 @@ plotResults <- function() {
 #' @import ggplot2
 #' @import shinyWidgets
 #' @import pkgload
+#' @import mice
+#' @import lattice
 #' @return Shiny app UI.
 #'
 plotMids <- function() {
     # UI -----------------------------------------------------------------------
 
     ui <- fluidPage(
-
         h1(" Trace plots for convergence checks"),
         h4(" - Number of latent variables 50"),
         h4(" - Proportion of missing values: 0.5"),
         h4(" - Missing data mechanism: MAR"),
-
         fluidRow(
 
             # Missing data treatments ------------------------------------------
@@ -418,10 +418,76 @@ plotMids <- function() {
                 )
                 cnd_id <- grep(cnd_search, names(dataMids$mids))
 
-                # Plot
-                plot(
-                    dataMids$mids[[cnd_id]],
-                    xlim = c(input$iters[1] - 1, input$iters[2] + 1)
+                # Work with simple object name
+                x <- dataMids$mids[[cnd_id]]
+
+                # Default arguments that you could change in MICE
+                type <- "l"
+                col <- 1:10
+                lty <- 1
+                theme <- mice::mice.theme()
+                layout <- c(2, 3)
+
+                # Extract objects I need
+                mn <- x$chainMean
+                sm <- sqrt(x$chainVar)
+                m <- x$m
+                it <- x$iteration
+
+                # select subset of non-missing entries
+                obs <- apply(!(is.nan(mn) | is.na(mn)), 1, all)
+                varlist <- names(obs)[obs]
+
+                # Prepare objects for plotting
+                mn <- matrix(aperm(mn[varlist, , , drop = FALSE], c(2, 3, 1)), nrow = m * it)
+                sm <- matrix(aperm(sm[varlist, , , drop = FALSE], c(2, 3, 1)), nrow = m * it)
+                adm <- expand.grid(seq_len(it), seq_len(m), c("mean", "sd"))
+                data <- cbind(adm, rbind(mn, sm))
+                colnames(data) <- c(".it", ".m", ".ms", varlist)
+
+                # Create formula
+                formula <- as.formula(paste0(
+                    paste0(varlist, collapse = "+"),
+                    "~.it|.ms"
+                ))
+
+                # Dummy to trick R CMD check
+                .m <- NULL
+                rm(.m)
+
+                # Load function to obtain the correct plot arrangement
+                strip.combined <- function(which.given, which.panel, factor.levels, ...) {
+                    if (which.given == 1) {
+                        lattice::panel.rect(0, 0, 1, 1,
+                            col = theme$strip.background$col, border = 1
+                        )
+                        lattice::panel.text(
+                            x = 0, y = 0.5, pos = 4,
+                            lab = factor.levels[which.panel[which.given]]
+                        )
+                    }
+                    if (which.given == 2) {
+                        lattice::panel.text(
+                            x = 1, y = 0.5, pos = 2,
+                            lab = factor.levels[which.panel[which.given]]
+                        )
+                    }
+                }
+
+                # Make plot
+                lattice::xyplot(
+                    x = formula, data = data, groups = .m,
+                    type = type, lty = lty, col = col, layout = layout,
+                    scales = list(
+                        y = list(relation = "free"),
+                        x = list(alternating = FALSE)
+                    ),
+                    as.table = TRUE,
+                    xlim = c(input$iters[1] - 1, input$iters[2] + 1),
+                    xlab = "Iteration",
+                    ylab = "",
+                    strip = strip.combined,
+                    par.strip.text = list(lines = 0.5),
                 )
             }
         )
