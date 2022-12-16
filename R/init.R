@@ -65,11 +65,11 @@ NULL
 
 #' dataMids
 #' 
-#' A list of mids objects and condition descriptions used to obtain the trace-plots for desired conditions.
+#' A list of mids objects and condition descriptions used to obtain the trace plots for desired conditions.
 #'
 #' @docType data
 #' @keywords datasets
-#' @name dataResults
-#' @usage data(dataResults)
+#' @name dataMids
+#' @usage data(dataMids)
 #' @format A data frame with 53940 rows and 10 variables
 NULL
