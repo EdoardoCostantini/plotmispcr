@@ -2,15 +2,15 @@
 
 This is a repository to host the `ui.R` and `server.R` and input file required by a shiny dashboard to dynamically sort through the results of the simulation study performed [here](https://github.com/EdoardoCostantini/mi-spcr)
 
-You may download this repository to build the app locally, or go [here](https://edoardocostantini.github.io/publication/mi-super-pcr/) to look at it.
+You may download this repository to build the app locally or go [here](https://edoardocostantini.github.io/publication/mi-super-pcr/) to look at it.
 
 You can interact with the results from the study [mi-pca](https://github.com/EdoardoCostantini/mi-spcr) by:
 
-- Visit the online [shiny app](https://edoardocostantini.shinyapps.io/plotmipca/).
+- Visit the online [shiny app](https://edoardocostantini.shinyapps.io/plotmispcr).
 - Installing this app locally as an R package:
 
     ```
-    devtools::install_github("https://github.com/EdoardoCostantini/----")
+    devtools::install_github("https://github.com/EdoardoCostantini/plotmispcr")
     ```
 
     If you install the shiny app as a package, you can run it by simply typing:
@@ -20,6 +20,10 @@ You can interact with the results from the study [mi-pca](https://github.com/Edo
     ```
 
     in your R console.
+
+## Plots
+
+### Simulation study results
 
 The interface of the Shiny app allows you to change the values of the following simulation study experimental factors:
 
@@ -56,3 +60,7 @@ The interface of the Shiny app allows you to change the values of the following 
 
 - Variables considered
 - Zoom on the y-axis
+
+### Convergence plots
+
+COMING SOON
