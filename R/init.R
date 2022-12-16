@@ -8,17 +8,26 @@
 
 # Data to plot
 dataResults <- readRDS("./data/20221202-105949-results.rds")
+dataMids <- readRDS("./data/20220729-104900-convergence-check.rds")
 
 # Make names of outcome variables prettier
 names(dataResults)[names(dataResults) == "coverage"] <- "CIC"
 names(dataResults)[names(dataResults) == "CIW_avg"] <- "CIW"
 
+# Change pls to plsr in the condition tags
+for(i in 1:length(names(dataMids$mids))){
+    names(dataMids$mids)[i] <- gsub("pls", "plsr", names(dataMids$mids)[i])
+}
+
 # Shiny dispatch ---------------------------------------------------------------
 
 usethis::use_data(dataResults, overwrite = TRUE)
+usethis::use_data(dataMids, overwrite = TRUE)
 
 # Document Data ----------------------------------------------------------------
 
+#' dataResults
+#' 
 #' The data.frame containing the results of the simulation study. It is automatically called by the plotting function.
 #'
 #' The columns of the data.frame are
@@ -46,6 +55,17 @@ usethis::use_data(dataResults, overwrite = TRUE)
 #'   \item CIW_lwr_avg. Average value of the confidence interval lower bound.
 #'   \item CIW_upr_avg. Average value of the confidence interval upper bound.
 #' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name dataResults
+#' @usage data(dataResults)
+#' @format A data frame with 53940 rows and 10 variables
+NULL
+
+#' dataMids
+#' 
+#' A list of mids objects and condition descriptions used to obtain the trace-plots for desired conditions.
 #'
 #' @docType data
 #' @keywords datasets

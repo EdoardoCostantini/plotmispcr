@@ -293,3 +293,137 @@ plotResults <- function() {
 
     shinyApp(ui, server)
 }
+
+#' plotMids
+#'
+#' Starts a Shiny app to check trace-plots for multiple imputation convergence plots for the \href{https://github.com/EdoardoCostantini/mi-spcr}{mi-spcr} project.
+#'
+#' @details
+#' The interface of the Shiny app allows you to change the values of the following simulation study experimental factors:
+#'
+#' - Missing data treatment used (see names in the interface)
+#'
+#'      - pcr: mice with principal component regression as univariate imputation method
+#'      - spcr: mice with supervised principal component regression as univariate imputation method
+#'      - plsr: mice with partial least squares regression as univariate imputation method
+#'      - pcovr: mice with principal covariates regression as univariate imputation method
+#'      - qp: mice with normal linear model with bootstrap as univariate imputation method and quickpred() used to select the predictors
+#'      - am: mice with normal linear model with bootstrap as univariate imputation method and the analysis model variables used as predictors
+#'      - all: mice with normal linear model with bootstrap as univariate imputation method and all available items used as predictors
+#'
+#' - Number of principal components (depending on the number of latent variables used)
+#' - Number of iterations used
+#'
+#' @export
+#' @import shiny
+#' @import shinybrowser
+#' @import dplyr
+#' @import ggplot2
+#' @import shinyWidgets
+#' @import pkgload
+#' @return Shiny app UI.
+#'
+plotMids <- function() {
+    # Set up -------------------------------------------------------------------
+
+    # UI -----------------------------------------------------------------------
+
+    ui <- fluidPage(
+        fluidRow(
+            h1("Trace-plots for convergence checks"),
+            h4("- Number of latent variables 50"),
+            h4("- Proportion of missing values: 0.5"),
+            h4("- Missing data mechanism: MAR"),
+
+            # Missing data treatments ------------------------------------------
+            column(
+                3,
+                hr(),
+                selectInput("method",
+                    "Imputation method:",
+                    choices = levels(dataResults$method)[1:7],
+                    selected = levels(dataResults$method)[1]
+                ),
+            ),
+
+            # Number of pcs ----------------------------------------------------
+
+            column(
+                3,
+                hr(),
+                selectInput(
+                    inputId = "npcs",
+                    label = "Number of PCs used",
+                    choices = sort(unique(dataResults$npcs))[-1],
+                    selected = sort(unique(dataResults$npcs))[2]
+                ),
+            ),
+
+            # Number of iterations ---------------------------------------------
+
+            column(
+                3,
+                hr(),
+                shinyWidgets::sliderTextInput(
+                    inputId = "iters",
+                    label = "Iteration range",
+                    hide_min_max = TRUE,
+                    choices = 0:100,
+                    selected = c(0, 25),
+                    grid = FALSE
+                ),
+            ),
+        ),
+        hr(),
+        plotOutput("plot"),
+
+        # Silent extraction of size
+        shinybrowser::detect(),
+    )
+
+    # Server -------------------------------------------------------------------
+
+    server <- function(input, output, session) {
+        # Dynamically update inputs
+
+        # Page width
+        observe({
+            if (input$method %in% levels(dataResults$method)[1:4]) {
+                updateSelectInput(session,
+                    inputId = "npcs",
+                    choices = sort(unique(dataResults$npcs))[-1],
+                    selected = sort(unique(dataResults$npcs))[2]
+                )
+            } else {
+                updateSelectInput(session,
+                    inputId = "npcs",
+                    choices = sort(unique(dataResults$npcs))[1],
+                    selected = sort(unique(dataResults$npcs))[1]
+                )
+            }
+        })
+
+        output$plot <- renderPlot(
+            res = 96,
+            height = 750,
+            {
+                # Define condition to plot based on inputs
+                cnd_search <- paste0(
+                    "npcs-", input$npcs,
+                    "-method-", input$method
+                )
+                cnd_id <- grep(cnd_search, names(dataMids$mids))
+
+                # Plot
+                plot(
+                    dataMids$mids[[cnd_id]],
+                    xlim = c(input$iters[1] - 1, input$iters[2] + 1)
+                )
+            }
+        )
+    }
+
+    # Run app ------------------------------------------------------------------
+
+    shinyApp(ui, server)
+}

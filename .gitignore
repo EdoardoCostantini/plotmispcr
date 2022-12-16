@@ -1,5 +1,5 @@
-# Ignore .idea folder
-/.idea/
+# Ignore .rds
+*.rds
 
 # Ignore published folder
 *.dcf

@@ -3,17 +3,25 @@
 \docType{data}
 \name{dataResults}
 \alias{dataResults}
-\title{The data.frame containing the results of the simulation study. It is automatically called by the plotting function.}
+\title{dataResults}
 \format{
+A data frame with 53940 rows and 10 variables
+
 A data frame with 53940 rows and 10 variables
 }
 \usage{
 data(dataResults)
+
+data(dataResults)
 }
 \description{
-The columns of the data.frame are
+The data.frame containing the results of the simulation study. It is automatically called by the plotting function.
+
+A list of mids objects and condition descriptions used to obtain the trace-plots for desired conditions.
 }
 \details{
+The columns of the data.frame are
+
 \itemize{
 \item tag. Character vector describing the condition.
 \item npcs. Number of principal components used.
