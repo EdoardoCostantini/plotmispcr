@@ -18,4 +18,5 @@ Imports:
     pkgload,
     shiny,
     shinybrowser,
-    shinyWidgets
+    shinyWidgets,
+    usethis
