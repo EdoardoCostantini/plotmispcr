@@ -2,9 +2,7 @@
 
 This is a repository to host the `ui.R` and `server.R` and input file required by a shiny dashboard to dynamically sort through the results of the simulation study performed [here](https://github.com/EdoardoCostantini/mi-spcr)
 
-You may download this repository to build the app locally or go [here](https://edoardocostantini.github.io/publication/mi-super-pcr/) to look at it.
-
-You can interact with the results from the study [mi-pca](https://github.com/EdoardoCostantini/mi-spcr) by:
+You can interact with the results from the study [mi-spcr](https://github.com/EdoardoCostantini/mi-spcr) by:
 
 - Visit the online [shiny app](https://edoardocostantini.shinyapps.io/plotmispcr) to check out the simulation study results.
 - Installing this app locally as an R package to check the convergence plot as well:
