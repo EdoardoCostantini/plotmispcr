@@ -1,5 +1,7 @@
 # Shiny app: plot mi-spcr results
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7451802.svg)](https://doi.org/10.5281/zenodo.7451802)
+
 This is a repository to host the `ui.R` and `server.R` and input file required by a shiny dashboard to dynamically sort through the results of the simulation study performed [here](https://github.com/EdoardoCostantini/mi-spcr)
 
 You can interact with the results from the study [mi-spcr](https://github.com/EdoardoCostantini/mi-spcr) by:
