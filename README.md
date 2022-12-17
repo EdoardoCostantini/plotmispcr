@@ -1,4 +1,4 @@
-# Shiny app: Plot mi-spcr results
+# Shiny app: plot mi-spcr results
 
 This is a repository to host the `ui.R` and `server.R` and input file required by a shiny dashboard to dynamically sort through the results of the simulation study performed [here](https://github.com/EdoardoCostantini/mi-spcr)
 
