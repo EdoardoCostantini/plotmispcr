@@ -5,7 +5,7 @@
 \alias{dataMids}
 \title{dataMids}
 \format{
-A data frame with 53940 rows and 10 variables
+A list containing (1) simplified mids for 81 conditions described in a (2) data.frame
 }
 \usage{
 data(dataMids)

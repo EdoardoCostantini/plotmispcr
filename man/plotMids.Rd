@@ -10,7 +10,7 @@ plotMids()
 Shiny app UI.
 }
 \description{
-Starts a Shiny app to check trace plots for multiple imputation convergence plots for the \href{https://github.com/EdoardoCostantini/mi-spcr}{mi-spcr} project.
+Starts a Shiny app to check trace plots for multiple imputation convergence for the \href{https://github.com/EdoardoCostantini/mi-spcr}{mi-spcr} project.
 }
 \details{
 The interface of the Shiny app allows you to change the values of the following simulation study experimental factors:
