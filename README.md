@@ -1,4 +1,4 @@
-# Shiny app: mi-spcr simulation results dashboard
+# Shiny app: Plot mi-spcr results
 
 This is a repository to host the `ui.R` and `server.R` and input file required by a shiny dashboard to dynamically sort through the results of the simulation study performed [here](https://github.com/EdoardoCostantini/mi-spcr)
 
@@ -6,26 +6,25 @@ You may download this repository to build the app locally or go [here](https://e
 
 You can interact with the results from the study [mi-pca](https://github.com/EdoardoCostantini/mi-spcr) by:
 
-- Visit the online [shiny app](https://edoardocostantini.shinyapps.io/plotmispcr).
-- Installing this app locally as an R package:
+- Visit the online [shiny app](https://edoardocostantini.shinyapps.io/plotmispcr) to check out the simulation study results.
+- Installing this app locally as an R package to check the convergence plot as well:
 
     ```
     devtools::install_github("https://github.com/EdoardoCostantini/plotmispcr")
     ```
 
-    If you install the shiny app as a package, you can run it by simply typing:
-
-    ```
-    plot.mi.spcr::plotResults()
-    ```
-
-    in your R console.
-
 ## Plots
 
 ### Simulation study results
 
-The interface of the Shiny app allows you to change the values of the following simulation study experimental factors:
+By using the R function:
+
+```
+plot.mi.spcr::plotResults()
+```
+
+a shiny app is started that allows you to plot the results of the simulation study.
+You can plot the results for the values of the following simulation study experimental factors:
 
 - Number of latent variables used to generate the data (2, 10, 50)
 - Proportion of missing values imposed on every variable (0.1, 0.25, 0.5)
@@ -51,7 +50,7 @@ The interface of the Shiny app allows you to change the values of the following 
     - CIW: average confidence interval
     - mcsd: Standard deviation of the estimate across the monte carlo simulations
 
-- Statistic;
+- Statistic:
 
     - cor: correlation between two items with missing values
     - cov: covariance between two items with missing values
@@ -63,4 +62,13 @@ The interface of the Shiny app allows you to change the values of the following 
 
 ### Convergence plots
 
-COMING SOON
+By using the R function:
+
+```
+plot.mi.spcr::plotMids()
+```
+
+a shiny app is started that allows you to study the trace plots for MI imputation algorithms used in the simulation study.
+The convergence check was performed for the most challenging data condition:
+
+For every imputation method, you can check the trace plot with different numbers of PCs.You can also easily change the range of iterations considered.
