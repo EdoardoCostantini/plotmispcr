@@ -100,125 +100,71 @@ plotResults <- function() {
                                         shiny::htmlOutput("introduction")
                                     ),
                                     shiny::tabPanel(
-                                        title = "1. Setup",
-                                        shiny::htmlOutput("setup")
+                                        title = "Outcome measures",
+                                        selectInput("plot_y_axis",
+                                            "Outcome measure",
+                                            choices = c("RB", "PRB", "CIC", "CIW", "mcsd")
+                                        ),
+                                        radioButtons("stat",
+                                            "Statistic",
+                                            inline = TRUE,
+                                            choices = unique(dataResults$stat)
+                                        ),
+                                        radioButtons("vars",
+                                            "Variables",
+                                            inline = TRUE,
+                                            choices = unique(dataResults$vars)
+                                        ),
+                                        shinyWidgets::sliderTextInput(
+                                            inputId = "yrange",
+                                            label = "Y-axis range",
+                                            hide_min_max = FALSE,
+                                            choices = 0:100,
+                                            selected = c(0, 10),
+                                            grid = FALSE
+                                        )
                                     ),
                                     shiny::tabPanel(
-                                        title = "2. Correlation matrix",
-                                        shiny::htmlOutput("heatmap_cor_int")
+                                        title = "Data generation",
+                                        radioButtons("nla",
+                                            "Number of latent variables",
+                                            choices = sort(unique(dataResults$nla)),
+                                            inline = TRUE
+                                        ),
+                                        checkboxGroupInput("pm",
+                                            "Proportion of missing values",
+                                            choices = sort(unique(dataResults$pm)),
+                                            selected = sort(unique(dataResults$pm)),
+                                            inline = TRUE
+                                        ),
+                                        checkboxGroupInput("mech",
+                                            "Missing data mechanism",
+                                            inline = TRUE,
+                                            choices = levels(dataResults$mech),
+                                            selected = levels(dataResults$mech)
+                                        )
                                     ),
                                     shiny::tabPanel(
-                                        title = "3. PC Loadings",
-                                        shiny::htmlOutput("heatmap_load_int")
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "4. Non-graphical decision rules",
-                                        shiny::htmlOutput("hist_int")
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "5. CPVE",
-                                        shiny::htmlOutput("scatter_int")
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "6. Conclusions",
-                                        shiny::htmlOutput("conclusions")
+                                        title = "Missing data treatments",
+                                        checkboxGroupInput("method",
+                                            "Imputation methods to compare:",
+                                            choices = levels(dataResults$method),
+                                            selected = levels(dataResults$method)[1:4],
+                                            inline = TRUE
+                                        ),
+                                        shinyWidgets::sliderTextInput(
+                                            inputId = "npcs",
+                                            label = "Number of principal components",
+                                            hide_min_max = TRUE,
+                                            choices = sort(unique(dataResults$npcs)),
+                                            selected = range(dataResults$npcs),
+                                            grid = TRUE
+                                        )
                                     )
                                 )
                             ),
                             shiny::column(
                                 width = 8,
-                                shiny::fluidRow(
-                                    shiny::titlePanel(
-                                        shiny::h3("Input", align = "center")
-                                    ),
-                                    shiny::column(
-                                        width = 12,
-                                        offset = 0,
-                                        # Data generation ----------------------------------------------------------
-                                        column(
-                                            3,
-                                            hr(),
-                                            h4("Data generation"),
-                                            radioButtons("nla",
-                                                "Number of latent variables",
-                                                choices = sort(unique(dataResults$nla)),
-                                                inline = TRUE
-                                            ),
-                                            checkboxGroupInput("pm",
-                                                "Proportion of missing values",
-                                                choices = sort(unique(dataResults$pm)),
-                                                selected = sort(unique(dataResults$pm)),
-                                                inline = TRUE
-                                            ),
-                                            checkboxGroupInput("mech",
-                                                "Missing data mechanism",
-                                                inline = TRUE,
-                                                choices = levels(dataResults$mech),
-                                                selected = levels(dataResults$mech)
-                                            ),
-                                        ),
-
-                                        # Missing data treatments --------------------------------------------------
-
-                                        column(
-                                            3,
-                                            hr(),
-                                            h4("Missing data treatments"),
-                                            checkboxGroupInput("method",
-                                                "Imputation methods to compare:",
-                                                choices = levels(dataResults$method),
-                                                selected = levels(dataResults$method)[1:4],
-                                                inline = TRUE
-                                            ),
-                                            shinyWidgets::sliderTextInput(
-                                                inputId = "npcs",
-                                                label = "Number of principal components",
-                                                hide_min_max = TRUE,
-                                                choices = sort(unique(dataResults$npcs)),
-                                                selected = range(dataResults$npcs),
-                                                grid = TRUE
-                                            ),
-                                        ),
-
-                                        # Outcome measures ---------------------------------------------------------
-
-                                        column(
-                                            3,
-                                            hr(),
-                                            h4("Outcome measures"),
-                                            selectInput("plot_y_axis",
-                                                "Outcome measure",
-                                                choices = c("RB", "PRB", "CIC", "CIW", "mcsd")
-                                            ),
-                                            radioButtons("stat",
-                                                "Statistic",
-                                                inline = TRUE,
-                                                choices = unique(dataResults$stat)
-                                            ),
-                                            radioButtons("vars",
-                                                "Variables",
-                                                inline = TRUE,
-                                                choices = unique(dataResults$vars)
-                                            ),
-                                        ),
-
-                                        # Zoom on y-axis -----------------------------------------------------------
-
-                                        column(
-                                            3,
-                                            hr(),
-                                            h4("Zoom on y-axis"),
-                                            shinyWidgets::sliderTextInput(
-                                                inputId = "yrange",
-                                                label = "Y-axis range",
-                                                hide_min_max = FALSE,
-                                                choices = 0:100,
-                                                selected = c(0, 10),
-                                                grid = FALSE
-                                            ),
-                                        ),
-                                    ),
-                                ),
                                 shiny::fluidRow(
                                     shiny::titlePanel(
                                         shiny::h3("Plots", align = "center")
