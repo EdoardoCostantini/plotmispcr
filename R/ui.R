@@ -10,7 +10,7 @@ ui_call <- function() {
     ui <- fluidPage(
         fluidRow(
             shiny::titlePanel(
-                shiny::h1("MI-SPCR simulation study results", align = "center")
+                shiny::h1("Supervised dimensionality reduction for MICE", align = "center")
             ),
             shiny::column(
                 width = 10,
@@ -21,7 +21,22 @@ ui_call <- function() {
                     selected = "About this Shiny app",
                     shiny::tabPanel(
                         title = "About this Shiny app",
-                        "Coming soon"
+                        shiny::HTML(
+                            "<br>
+                            This Shiny app accompanies the paper:
+                            <br>
+                            <br>
+                            Supervised dimensionality reduction for multiple imputation by chained equations by bla bla
+                            <br>
+                            <br>
+                            With this app, the user can:
+                            <ul>
+                                <li>Interact with the results presented in the paper by going to the <b>Simulation study</b> tab.</li>
+                                <li>Interact with trace plots showing the convergence of the methods compared in the simulation study by going to the <b>Convergence checks</b> tab.</li>
+                            </ul>
+                            For questions and feedback, please <a href = 'mailto:e.costantini@tilburguniversity.edu'>send me an email</a>.
+                            "
+                        )
                     ),
                     shiny::tabPanel(
                         title = "Simulation study",
