@@ -127,45 +127,43 @@ ui_call <- function() {
                         shiny::fluidRow(
                             shiny::column(
                                 width = 4,
-                                shiny::titlePanel(
-                                    shiny::h3("Convergence checks", align = "center")
+                                shiny::HTML(
+                                    "<br>
+                                    This tab allows you to study the <b>trace plots</b> for the MI algorithms used in the simulation study.
+                                    The convergence check was performed for the most challenging <b>data condition</b>:
+                                    <ul>
+                                         <li>50 latent variables</li>
+                                         <li>0.5 proportion of missing cases</li>
+                                         <li>MAR missing data mechanism</li>
+                                    </ul>
+                                    For every imputation method, you can check the trace plot with <b>different numbers of PCs</b>.
+                                    You can also easily change the <b>range of iterations</b> considered.
+                                    <br>
+                                    <br>"
                                 ),
-                                shiny::tabsetPanel(
-                                    type = "tabs",
-                                    shiny::tabPanel(
-                                        title = "Introduction",
-                                        ""
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "Inputs",
-                                        selectInput("plot_case_method",
-                                            "Imputation method:",
-                                            choices = levels(dataResults$method)[1:7],
-                                            selected = levels(dataResults$method)[1]
-                                        ),
-                                        selectInput(
-                                            inputId = "plot_case_npcs",
-                                            label = "Number of PCs used",
-                                            choices = sort(unique(dataResults$npcs))[-1],
-                                            selected = sort(unique(dataResults$npcs))[2]
-                                        ),
-                                        shinyWidgets::sliderTextInput(
-                                            inputId = "plot_case_iters",
-                                            label = "Iteration range",
-                                            hide_min_max = TRUE,
-                                            choices = 0:100,
-                                            selected = c(0, 25),
-                                            grid = FALSE
-                                        )
-                                    )
+                                selectInput("plot_case_method",
+                                    "Imputation method:",
+                                    choices = levels(dataResults$method)[1:7],
+                                    selected = levels(dataResults$method)[1]
+                                ),
+                                selectInput(
+                                    inputId = "plot_case_npcs",
+                                    label = "Number of PCs used",
+                                    choices = sort(unique(dataResults$npcs))[-1],
+                                    selected = sort(unique(dataResults$npcs))[2]
+                                ),
+                                shinyWidgets::sliderTextInput(
+                                    inputId = "plot_case_iters",
+                                    label = "Iteration range",
+                                    hide_min_max = TRUE,
+                                    choices = 0:100,
+                                    selected = c(0, 25),
+                                    grid = FALSE
                                 )
                             ),
                             shiny::column(
                                 width = 8,
                                 shiny::fluidRow(
-                                    shiny::titlePanel(
-                                        shiny::h3("Plots", align = "center")
-                                    ),
                                     shiny::plotOutput("plot_mids"),
 
                                     # Silent extraction of size
