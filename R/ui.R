@@ -35,15 +35,67 @@ ui_call <- function() {
                                     <br>
                                     <br>"
                                 ),
-                                shiny::tabsetPanel(
-                                    type = "tabs",
+                                shiny::navlistPanel(
+                                    widths = c(11, 12),
                                     shiny::tabPanel(
-                                        title = "1. Simulation outcomes",
+                                        title = "1. Data generation",
                                         shiny::HTML(
                                             "<br>
-                                    Here you can change what outcome measures to plot.
-                                    <br>
-                                    <br>"
+                                            Here you can change how the data were generated.
+                                            <br>
+                                            <br>"
+                                        ),
+                                        radioButtons(
+                                            inputId = "plot_sim_nla",
+                                            label = "Number of latent variables",
+                                            choices = sort(unique(dataResults$nla)),
+                                            selected = sort(unique(dataResults$nla))[2],
+                                            inline = TRUE
+                                        ),
+                                        checkboxGroupInput(
+                                            inputId = "plot_sim_pm",
+                                            label = "Proportion of missing values",
+                                            choices = sort(unique(dataResults$pm)),
+                                            selected = sort(unique(dataResults$pm))[c(2, 3)],
+                                            inline = TRUE
+                                        ),
+                                        checkboxGroupInput("plot_sim_mech",
+                                            "Missing data mechanism",
+                                            inline = TRUE,
+                                            choices = levels(dataResults$mech),
+                                            selected = levels(dataResults$mech)
+                                        )
+                                    ),
+                                    shiny::tabPanel(
+                                        title = "2. Missing data treatments",
+                                        shiny::HTML(
+                                            "<br>
+                                            Here you can change how the missing data were generated
+                                            <br>
+                                            <br>"
+                                        ),
+                                        checkboxGroupInput("plot_sim_method",
+                                            "Imputation methods to compare:",
+                                            choices = levels(dataResults$method),
+                                            selected = levels(dataResults$method)[c(1:4, 8)],
+                                            inline = TRUE
+                                        ),
+                                        shinyWidgets::sliderTextInput(
+                                            inputId = "plot_sim_npcs",
+                                            label = "Number of principal components",
+                                            hide_min_max = TRUE,
+                                            choices = sort(unique(dataResults$npcs)),
+                                            selected = range(dataResults$npcs),
+                                            grid = TRUE
+                                        )
+                                    ),
+                                    shiny::tabPanel(
+                                        title = "3. Simulation outcomes",
+                                        shiny::HTML(
+                                            "<br>
+                                            Here you can change what outcome measures to plot.
+                                            <br>
+                                            <br>"
                                         ),
                                         selectInput(
                                             inputId = "plot_sim_y_axis",
@@ -69,58 +121,6 @@ ui_call <- function() {
                                             choices = 0:100,
                                             selected = c(0, 60),
                                             grid = FALSE
-                                        )
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "2. Data generation",
-                                        shiny::HTML(
-                                            "<br>
-                                    Here you can change how the data were generated.
-                                    <br>
-                                    <br>"
-                                        ),
-                                        radioButtons(
-                                            inputId = "plot_sim_nla",
-                                            label = "Number of latent variables",
-                                            choices = sort(unique(dataResults$nla)),
-                                            selected = sort(unique(dataResults$nla))[2],
-                                            inline = TRUE
-                                        ),
-                                        checkboxGroupInput(
-                                            inputId = "plot_sim_pm",
-                                            label = "Proportion of missing values",
-                                            choices = sort(unique(dataResults$pm)),
-                                            selected = sort(unique(dataResults$pm))[c(2, 3)],
-                                            inline = TRUE
-                                        ),
-                                        checkboxGroupInput("plot_sim_mech",
-                                            "Missing data mechanism",
-                                            inline = TRUE,
-                                            choices = levels(dataResults$mech),
-                                            selected = levels(dataResults$mech)
-                                        )
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "3. Missing data treatments",
-                                        shiny::HTML(
-                                            "<br>
-                                    Here you can change how the missing data were generated
-                                    <br>
-                                    <br>"
-                                        ),
-                                        checkboxGroupInput("plot_sim_method",
-                                            "Imputation methods to compare:",
-                                            choices = levels(dataResults$method),
-                                            selected = levels(dataResults$method)[c(1:4, 8)],
-                                            inline = TRUE
-                                        ),
-                                        shinyWidgets::sliderTextInput(
-                                            inputId = "plot_sim_npcs",
-                                            label = "Number of principal components",
-                                            hide_min_max = TRUE,
-                                            choices = sort(unique(dataResults$npcs)),
-                                            selected = range(dataResults$npcs),
-                                            grid = TRUE
                                         )
                                     )
                                 )
