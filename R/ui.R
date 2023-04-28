@@ -127,7 +127,7 @@ ui_call <- function() {
                             shiny::column(
                                 width = 4,
                                 shiny::titlePanel(
-                                    shiny::h3("Simulation  study", align = "center")
+                                    shiny::h3("Convergence checks", align = "center")
                                 ),
                                 shiny::tabsetPanel(
                                     type = "tabs",
