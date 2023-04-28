@@ -86,6 +86,22 @@ server <- function(input, output, session) {
         )
     })
 
+    # > Adjust NPCs option in traceplots based on methods ----------------------
+    observe({
+        # Subset active data
+        active_npcs <- (dataMids$cnds %>%
+            filter(method == input$plot_case_method))$npcs
+
+        # Update input
+        shiny::updateSelectInput(
+            session,
+            inputId = "plot_case_npcs",
+            choices = sort(active_npcs),
+            selected = sort(active_npcs)[1]
+        )
+    })
+
+
     # Simulation study output ----------------------------------------------
     output$plot <- renderPlot(
         res = 96,
