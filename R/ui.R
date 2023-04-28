@@ -28,17 +28,75 @@ ui_call <- function() {
                         shiny::fluidRow(
                             shiny::column(
                                 width = 4,
-                                shiny::titlePanel(
-                                    shiny::h3("Simulation  study", align = "center")
+                                shiny::HTML(
+                                    "<br>
+                                    This tab allows you to plot the results of the simulation study reported in the article --- .
+                                    In the following tabs, you can choose to change the values of different experimental factors to plot results that were omitted from the article.
+                                    <br>
+                                    <br>"
                                 ),
-                                shiny::tabsetPanel(
-                                    type = "tabs",
+                                shiny::navlistPanel(
+                                    widths = c(11, 12),
                                     shiny::tabPanel(
-                                        title = "Introduction",
-                                        shiny::htmlOutput("introduction")
+                                        title = "1. Data generation",
+                                        shiny::HTML(
+                                            "<br>
+                                            Here you can change how the data were generated.
+                                            <br>
+                                            <br>"
+                                        ),
+                                        radioButtons(
+                                            inputId = "plot_sim_nla",
+                                            label = "Number of latent variables",
+                                            choices = sort(unique(dataResults$nla)),
+                                            selected = sort(unique(dataResults$nla))[2],
+                                            inline = TRUE
+                                        ),
+                                        checkboxGroupInput(
+                                            inputId = "plot_sim_pm",
+                                            label = "Proportion of missing values",
+                                            choices = sort(unique(dataResults$pm)),
+                                            selected = sort(unique(dataResults$pm))[c(2, 3)],
+                                            inline = TRUE
+                                        ),
+                                        checkboxGroupInput("plot_sim_mech",
+                                            "Missing data mechanism",
+                                            inline = TRUE,
+                                            choices = levels(dataResults$mech),
+                                            selected = levels(dataResults$mech)
+                                        )
                                     ),
                                     shiny::tabPanel(
-                                        title = "Outcome measures",
+                                        title = "2. Missing data treatments",
+                                        shiny::HTML(
+                                            "<br>
+                                            Here you can change which missing data treatments to show.
+                                            <br>
+                                            <br>"
+                                        ),
+                                        checkboxGroupInput("plot_sim_method",
+                                            "Imputation methods to compare:",
+                                            choices = levels(dataResults$method),
+                                            selected = levels(dataResults$method)[c(1:4, 8)],
+                                            inline = TRUE
+                                        ),
+                                        shinyWidgets::sliderTextInput(
+                                            inputId = "plot_sim_npcs",
+                                            label = "Number of principal components",
+                                            hide_min_max = TRUE,
+                                            choices = sort(unique(dataResults$npcs)),
+                                            selected = range(dataResults$npcs),
+                                            grid = TRUE
+                                        )
+                                    ),
+                                    shiny::tabPanel(
+                                        title = "3. Simulation outcomes",
+                                        shiny::HTML(
+                                            "<br>
+                                            Here you can change what outcome measures to plot.
+                                            <br>
+                                            <br>"
+                                        ),
                                         selectInput(
                                             inputId = "plot_sim_y_axis",
                                             label = "Outcome measure",
@@ -61,47 +119,8 @@ ui_call <- function() {
                                             label = "Y-axis range",
                                             hide_min_max = FALSE,
                                             choices = 0:100,
-                                            selected = c(0, 10),
+                                            selected = c(0, 60),
                                             grid = FALSE
-                                        )
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "Data generation",
-                                        radioButtons(
-                                            inputId = "plot_sim_nla",
-                                            label = "Number of latent variables",
-                                            choices = sort(unique(dataResults$nla)),
-                                            inline = TRUE
-                                        ),
-                                        checkboxGroupInput(
-                                            inputId = "plot_sim_pm",
-                                            label = "Proportion of missing values",
-                                            choices = sort(unique(dataResults$pm)),
-                                            selected = sort(unique(dataResults$pm)),
-                                            inline = TRUE
-                                        ),
-                                        checkboxGroupInput("plot_sim_mech",
-                                            "Missing data mechanism",
-                                            inline = TRUE,
-                                            choices = levels(dataResults$mech),
-                                            selected = levels(dataResults$mech)
-                                        )
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "Missing data treatments",
-                                        checkboxGroupInput("plot_sim_method",
-                                            "Imputation methods to compare:",
-                                            choices = levels(dataResults$method),
-                                            selected = levels(dataResults$method)[1:4],
-                                            inline = TRUE
-                                        ),
-                                        shinyWidgets::sliderTextInput(
-                                            inputId = "plot_sim_npcs",
-                                            label = "Number of principal components",
-                                            hide_min_max = TRUE,
-                                            choices = sort(unique(dataResults$npcs)),
-                                            selected = range(dataResults$npcs),
-                                            grid = TRUE
                                         )
                                     )
                                 )
@@ -109,9 +128,6 @@ ui_call <- function() {
                             shiny::column(
                                 width = 8,
                                 shiny::fluidRow(
-                                    shiny::titlePanel(
-                                        shiny::h3("Plots", align = "center")
-                                    ),
                                     shiny::plotOutput("plot"),
 
                                     # Silent extraction of size
@@ -126,45 +142,43 @@ ui_call <- function() {
                         shiny::fluidRow(
                             shiny::column(
                                 width = 4,
-                                shiny::titlePanel(
-                                    shiny::h3("Simulation  study", align = "center")
+                                shiny::HTML(
+                                    "<br>
+                                    This tab allows you to study the <b>trace plots</b> for the MI algorithms used in the simulation study.
+                                    The convergence check was performed for the most challenging <b>data condition</b>:
+                                    <ul>
+                                         <li>50 latent variables</li>
+                                         <li>0.5 proportion of missing cases</li>
+                                         <li>MAR missing data mechanism</li>
+                                    </ul>
+                                    For every imputation method, you can check the trace plot with <b>different numbers of PCs</b>.
+                                    You can also easily change the <b>range of iterations</b> considered.
+                                    <br>
+                                    <br>"
                                 ),
-                                shiny::tabsetPanel(
-                                    type = "tabs",
-                                    shiny::tabPanel(
-                                        title = "Introduction",
-                                        ""
-                                    ),
-                                    shiny::tabPanel(
-                                        title = "Inputs",
-                                        selectInput("plot_case_method",
-                                            "Imputation method:",
-                                            choices = levels(dataResults$method)[1:7],
-                                            selected = levels(dataResults$method)[1]
-                                        ),
-                                        selectInput(
-                                            inputId = "plot_case_npcs",
-                                            label = "Number of PCs used",
-                                            choices = sort(unique(dataResults$npcs))[-1],
-                                            selected = sort(unique(dataResults$npcs))[2]
-                                        ),
-                                        shinyWidgets::sliderTextInput(
-                                            inputId = "plot_case_iters",
-                                            label = "Iteration range",
-                                            hide_min_max = TRUE,
-                                            choices = 0:100,
-                                            selected = c(0, 25),
-                                            grid = FALSE
-                                        )
-                                    )
+                                selectInput("plot_case_method",
+                                    "Imputation method:",
+                                    choices = levels(dataResults$method)[1:7],
+                                    selected = levels(dataResults$method)[1]
+                                ),
+                                selectInput(
+                                    inputId = "plot_case_npcs",
+                                    label = "Number of PCs used",
+                                    choices = sort(unique(dataResults$npcs))[-1],
+                                    selected = sort(unique(dataResults$npcs))[2]
+                                ),
+                                shinyWidgets::sliderTextInput(
+                                    inputId = "plot_case_iters",
+                                    label = "Iteration range",
+                                    hide_min_max = TRUE,
+                                    choices = 0:100,
+                                    selected = c(0, 25),
+                                    grid = FALSE
                                 )
                             ),
                             shiny::column(
                                 width = 8,
                                 shiny::fluidRow(
-                                    shiny::titlePanel(
-                                        shiny::h3("Plots", align = "center")
-                                    ),
                                     shiny::plotOutput("plot_mids"),
 
                                     # Silent extraction of size
