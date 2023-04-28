@@ -142,7 +142,7 @@ plotResults <- function() {
                                             selected = sort(unique(dataResults$pm)),
                                             inline = TRUE
                                         ),
-                                        checkboxGroupInput("mech",
+                                        checkboxGroupInput("plot_sim_mech",
                                             "Missing data mechanism",
                                             inline = TRUE,
                                             choices = levels(dataResults$mech),
@@ -151,14 +151,14 @@ plotResults <- function() {
                                     ),
                                     shiny::tabPanel(
                                         title = "Missing data treatments",
-                                        checkboxGroupInput("method",
+                                        checkboxGroupInput("plot_sim_method",
                                             "Imputation methods to compare:",
                                             choices = levels(dataResults$method),
                                             selected = levels(dataResults$method)[1:4],
                                             inline = TRUE
                                         ),
                                         shinyWidgets::sliderTextInput(
-                                            inputId = "npcs",
+                                            inputId = "plot_sim_npcs",
                                             label = "Number of principal components",
                                             hide_min_max = TRUE,
                                             choices = sort(unique(dataResults$npcs)),
@@ -174,7 +174,7 @@ plotResults <- function() {
                                     shiny::titlePanel(
                                         shiny::h3("Plots", align = "center")
                                     ),
-                                    plotOutput("plot"),
+                                    shiny::plotOutput("plot"),
 
                                     # Silent extraction of size
                                     shinybrowser::detect(),
@@ -209,7 +209,11 @@ plotResults <- function() {
 
         # Statistics and Variables requested
         observe({
-            choices_vars <- unique((dataResults %>% filter(stat == input$plot_sim_stat))$vars)
+            choices_vars <- unique(
+                (dataResults %>%
+                    filter(stat == input$plot_sim_stat)
+                )$vars
+            )
 
             updateRadioButtons(session,
                 inputId = "plot_sim_vars",
@@ -225,13 +229,12 @@ plotResults <- function() {
             data_subset <- dataResults %>%
                 filter(
                     nla == input$plot_sim_nla,
-                    mech %in% input$mech,
+                    mech %in% input$plot_sim_mech,
                     pm %in% input$plot_sim_pm,
-                    # vars == input$plot_sim_vars,
                     stat == input$plot_sim_stat,
-                    method %in% input$method,
-                    npcs <= input$npcs[2],
-                    npcs >= input$npcs[1]
+                    method %in% input$plot_sim_method,
+                    npcs <= input$plot_sim_npcs[2],
+                    npcs >= input$plot_sim_npcs[1]
                 )
 
             # Define low bound
@@ -257,10 +260,14 @@ plotResults <- function() {
 
         # Number of components displayed by slider based on nla condition
         observe({
-            npcs_to_plot <- unique((dataResults %>% filter(nla == input$plot_sim_nla))$npcs)
+            npcs_to_plot <- unique(
+                (dataResults %>%
+                    filter(nla == input$plot_sim_nla)
+                )$npcs
+            )
             npcs_to_plot <- sort(npcs_to_plot)
             shinyWidgets::updateSliderTextInput(session,
-                inputId = "npcs",
+                inputId = "plot_sim_npcs",
                 choices = npcs_to_plot,
                 selected = range(npcs_to_plot)
             )
@@ -273,13 +280,13 @@ plotResults <- function() {
                 dataResults %>%
                     filter(
                         nla == input$plot_sim_nla,
-                        mech %in% input$mech,
+                        mech %in% input$plot_sim_mech,
                         pm %in% input$plot_sim_pm,
                         vars == input$plot_sim_vars,
                         stat == input$plot_sim_stat,
-                        method %in% input$method,
-                        npcs <= input$npcs[2],
-                        npcs >= input$npcs[1]
+                        method %in% input$plot_sim_method,
+                        npcs <= input$plot_sim_npcs[2],
+                        npcs >= input$plot_sim_npcs[1]
                     ) %>%
                     ggplot(aes_string(
                         x = plot_x_axis,
@@ -288,9 +295,17 @@ plotResults <- function() {
                     )) +
                     geom_line(col = "darkgray") +
                     geom_point(aes_string(shape = moderator), size = 2.5) +
-                    scale_x_continuous(breaks = sort(unique(dataResults$npcs)), sort(unique(dataResults$npcs))) +
+                    scale_x_continuous(
+                        breaks = sort(unique(dataResults$npcs)), 
+                        sort(unique(dataResults$npcs))
+                        ) +
+
                     # Zoomable y-axis
-                    coord_cartesian(ylim = c(input$plot_sim_y_range[1], input$plot_sim_y_range[2])) +
+                    coord_cartesian(ylim = c(
+                        input$plot_sim_y_range[1], 
+                        input$plot_sim_y_range[2])
+                        ) +
+
                     # Facet grid
                     facet_grid(
                         stats::reformulate(
