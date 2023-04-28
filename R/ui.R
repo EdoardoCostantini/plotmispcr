@@ -38,7 +38,7 @@ ui_call <- function() {
                                         shiny::htmlOutput("introduction")
                                     ),
                                     shiny::tabPanel(
-                                        title = "Outcome measures",
+                                        title = "1. Simulation outcomes",
                                         selectInput(
                                             inputId = "plot_sim_y_axis",
                                             label = "Outcome measure",
@@ -66,7 +66,7 @@ ui_call <- function() {
                                         )
                                     ),
                                     shiny::tabPanel(
-                                        title = "Data generation",
+                                        title = "2. Data generation",
                                         radioButtons(
                                             inputId = "plot_sim_nla",
                                             label = "Number of latent variables",
@@ -88,7 +88,7 @@ ui_call <- function() {
                                         )
                                     ),
                                     shiny::tabPanel(
-                                        title = "Missing data treatments",
+                                        title = "3. Missing data treatments",
                                         checkboxGroupInput("plot_sim_method",
                                             "Imputation methods to compare:",
                                             choices = levels(dataResults$method),
