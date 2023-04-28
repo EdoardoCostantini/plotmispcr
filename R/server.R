@@ -8,9 +8,9 @@
 #' @author Edoardo Costantini, 2023
 #' @export
 server <- function(input, output, session) {
-        # Dynamically update inputs
+        # Dynamically update inputs --------------------------------------------
 
-        # Page width
+        # > Page width ---------------------------------------------------------
         observe({
             if (shinybrowser::get_width() < 768) {
                 updateCheckboxGroupInput(session,
@@ -20,7 +20,7 @@ server <- function(input, output, session) {
             }
         })
 
-        # Statistics and Variables requested
+        # > Statistics and Variables requested ---------------------------------
         observe({
             choices_vars <- unique(
                 (dataResults %>%
@@ -36,7 +36,7 @@ server <- function(input, output, session) {
             )
         })
 
-        # Zoom on the y-axis
+        # > Zoom on the y-axis -------------------------------------------------
         observe({
             # Define subset of data in use
             data_subset <- dataResults %>%
@@ -71,7 +71,7 @@ server <- function(input, output, session) {
             )
         })
 
-        # Number of components displayed by slider based on nla condition
+        # > NPCs displayed by slider based on nla condition --------------------
         observe({
             npcs_to_plot <- unique(
                 (dataResults %>%
@@ -86,67 +86,28 @@ server <- function(input, output, session) {
             )
         })
 
+        # Simulation study output ----------------------------------------------
         output$plot <- renderPlot(
             res = 96,
             height = 750,
             {
-                dataResults %>%
-                    filter(
-                        nla == input$plot_sim_nla,
-                        mech %in% input$plot_sim_mech,
-                        pm %in% input$plot_sim_pm,
-                        vars == input$plot_sim_vars,
-                        stat == input$plot_sim_stat,
-                        method %in% input$plot_sim_method,
-                        npcs <= input$plot_sim_npcs[2],
-                        npcs >= input$plot_sim_npcs[1]
-                    ) %>%
-                    ggplot(aes_string(
-                        x = "npcs",
-                        y = input$plot_sim_y_axis,
-                        group = "method"
-                    )) +
-                    geom_line(col = "darkgray") +
-                    geom_point(aes_string(shape = "method"), size = 2.5) +
-                    scale_x_continuous(
-                        breaks = sort(unique(dataResults$npcs)),
-                        sort(unique(dataResults$npcs))
-                    ) +
-
-                    # Zoomable y-axis
-                    coord_cartesian(ylim = c(
-                        input$plot_sim_y_range[1],
-                        input$plot_sim_y_range[2]
-                    )) +
-
-                    # Facet grid
-                    facet_grid(
-                        stats::reformulate(
-                            "mech",
-                            "pm"
-                        ),
-                        labeller = labeller(
-                            .rows = label_both,
-                            .cols = label_value
-                        ),
-                        switch = "y"
-                    ) +
-                    theme(
-                        # Text
-                        text = element_text(size = 12),
-                        strip.text.y.right = element_text(angle = 0),
-                        plot.title = element_text(hjust = 0.5),
-                        axis.title = element_text(size = 10),
-                        axis.title.x = element_blank(),
-                        # Legend
-                        legend.title = element_blank(),
-                        legend.position = "bottom",
-                        # Backgorund
-                        panel.background = element_rect(fill = NA, color = "gray")
-                    )
+                # Use the function
+                plot_simulation(
+                    results = dataResults,
+                    outcome = input$plot_sim_y_axis,
+                    n_latent = input$plot_sim_nla,
+                    na_mechanism = input$plot_sim_mech,
+                    prop_na = input$plot_sim_pm,
+                    variables = input$plot_sim_vars,
+                    parameter = input$plot_sim_stat,
+                    method_vector = input$plot_sim_method,
+                    npc_range = input$plot_sim_npcs,
+                    y_axis_range = input$plot_sim_y_range
+                )
             }
         )
 
+        # Convergence checks plot ----------------------------------------------
         output$plot_mids <- renderPlot(
             res = 96,
             height = 750,
