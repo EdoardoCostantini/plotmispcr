@@ -70,7 +70,7 @@ ui_call <- function() {
                                         title = "2. Missing data treatments",
                                         shiny::HTML(
                                             "<br>
-                                            Here you can change how the missing data were generated
+                                            Here you can change which missing data treatments to show.
                                             <br>
                                             <br>"
                                         ),
