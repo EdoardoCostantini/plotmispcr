@@ -61,7 +61,7 @@ ui_call <- function() {
                                             label = "Y-axis range",
                                             hide_min_max = FALSE,
                                             choices = 0:100,
-                                            selected = c(0, 10),
+                                            selected = c(0, 60),
                                             grid = FALSE
                                         )
                                     ),
@@ -71,13 +71,14 @@ ui_call <- function() {
                                             inputId = "plot_sim_nla",
                                             label = "Number of latent variables",
                                             choices = sort(unique(dataResults$nla)),
+                                            selected = sort(unique(dataResults$nla))[2],
                                             inline = TRUE
                                         ),
                                         checkboxGroupInput(
                                             inputId = "plot_sim_pm",
                                             label = "Proportion of missing values",
                                             choices = sort(unique(dataResults$pm)),
-                                            selected = sort(unique(dataResults$pm)),
+                                            selected = sort(unique(dataResults$pm))[c(2, 3)],
                                             inline = TRUE
                                         ),
                                         checkboxGroupInput("plot_sim_mech",
@@ -92,7 +93,7 @@ ui_call <- function() {
                                         checkboxGroupInput("plot_sim_method",
                                             "Imputation methods to compare:",
                                             choices = levels(dataResults$method),
-                                            selected = levels(dataResults$method)[1:4],
+                                            selected = levels(dataResults$method)[c(1:4, 8)],
                                             inline = TRUE
                                         ),
                                         shinyWidgets::sliderTextInput(
