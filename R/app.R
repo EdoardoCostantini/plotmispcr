@@ -185,7 +185,56 @@ plotResults <- function() {
                     ),
                     shiny::tabPanel(
                         title = "Convergence checks",
-                        "Coming soon"
+                        shiny::fluidRow(
+                            shiny::column(
+                                width = 4,
+                                shiny::titlePanel(
+                                    shiny::h3("Simulation  study", align = "center")
+                                ),
+                                shiny::tabsetPanel(
+                                    type = "tabs",
+                                    shiny::tabPanel(
+                                        title = "Description",
+                                        ""
+                                    ),
+                                    shiny::tabPanel(
+                                        title = "Inputs",
+                                        selectInput("plot_case_method",
+                                            "Imputation method:",
+                                            choices = levels(dataResults$method)[1:7],
+                                            selected = levels(dataResults$method)[1]
+                                        ),
+                                        selectInput(
+                                            inputId = "plot_case_npcs",
+                                            label = "Number of PCs used",
+                                            choices = sort(unique(dataResults$npcs))[-1],
+                                            selected = sort(unique(dataResults$npcs))[2]
+                                        ),
+                                        shinyWidgets::sliderTextInput(
+                                            inputId = "plot_case_iters",
+                                            label = "Iteration range",
+                                            hide_min_max = TRUE,
+                                            choices = 0:100,
+                                            selected = c(0, 25),
+                                            grid = FALSE
+                                        )
+                                    )
+                                )
+                            ),
+                            shiny::column(
+                                width = 8,
+                                shiny::fluidRow(
+                                    shiny::titlePanel(
+                                        shiny::h3("Plots", align = "center")
+                                    ),
+                                    shiny::plotOutput("plot_mids"),
+
+                                    # Silent extraction of size
+                                    shinybrowser::detect(),
+                                ),
+                                style = "border-left: 1px solid; border-left-color: #DDDDDD"
+                            )
+                        )
                     )
                 )
             )
@@ -332,6 +381,92 @@ plotResults <- function() {
                         panel.background = element_rect(fill = NA, color = "gray")
                     )
             }
+        )
+
+output$plot_mids <- renderPlot(
+            res = 96,
+            height = 750,
+            {
+                # Define condition to plot based on inputs
+                cnd_search <- paste0(
+                    "npcs-", input$plot_case_npcs,
+                    "-method-", input$plot_case_method
+                )
+                cnd_id <- grep(cnd_search, names(dataMids$mids))
+
+                # Work with simple object name
+                x <- dataMids$mids[[cnd_id]]
+
+                # Default arguments that you could change in MICE
+                type <- "l"
+                col <- 1:10
+                lty <- 1
+                theme <- mice::mice.theme()
+                layout <- c(2, 3)
+
+                # Extract objects I need
+                mn <- x$chainMean
+                sm <- sqrt(x$chainVar)
+                m <- x$m
+                it <- x$iteration
+
+                # select subset of non-missing entries
+                obs <- apply(!(is.nan(mn) | is.na(mn)), 1, all)
+                varlist <- names(obs)[obs]
+
+                # Prepare objects for plotting
+                mn <- matrix(aperm(mn[varlist, , , drop = FALSE], c(2, 3, 1)), nrow = m * it)
+                sm <- matrix(aperm(sm[varlist, , , drop = FALSE], c(2, 3, 1)), nrow = m * it)
+                adm <- expand.grid(seq_len(it), seq_len(m), c("mean", "sd"))
+                data <- cbind(adm, rbind(mn, sm))
+                colnames(data) <- c(".it", ".m", ".ms", varlist)
+
+                # Create formula
+                formula <- as.formula(paste0(
+                    paste0(varlist, collapse = "+"),
+                    "~.it|.ms"
+                ))
+
+                # Dummy to trick R CMD check
+                .m <- NULL
+                rm(.m)
+
+                # Load function to obtain the correct plot arrangement
+                strip.combined <- function(which.given, which.panel, factor.levels, ...) {
+                    if (which.given == 1) {
+                        lattice::panel.rect(0, 0, 1, 1,
+                            col = theme$strip.background$col, border = 1
+                        )
+                        lattice::panel.text(
+                            x = 0, y = 0.5, pos = 4,
+                            lab = factor.levels[which.panel[which.given]]
+                        )
+                    }
+                    if (which.given == 2) {
+                        lattice::panel.text(
+                            x = 1, y = 0.5, pos = 2,
+                            lab = factor.levels[which.panel[which.given]]
+                        )
+                    }
+                }
+
+                # Make plot
+                lattice::xyplot(
+                    x = formula, data = data, groups = .m,
+                    type = type, lty = lty, col = col, layout = layout,
+                    scales = list(
+                        y = list(relation = "free"),
+                        x = list(alternating = FALSE)
+                    ),
+                    as.table = TRUE,
+                    xlim = c(input$plot_case_iters[1] - 1, input$plot_case_iters[2] + 1),
+                    xlab = "Iteration",
+                    ylab = "",
+                    strip = strip.combined,
+                    par.strip.text = list(lines = 0.5),
+                )
+            }
+
         )
     }
 
