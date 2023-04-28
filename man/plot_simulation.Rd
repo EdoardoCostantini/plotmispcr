@@ -44,14 +44,14 @@ Generate the main plot for the simulation study.
 # Define example inputs
 results <- dataResults
 outcome <- "PRB"
-n_latent <- dataResults$nla[1]
+n_latent <- dataResults$nla[2]
 na_mechanism <- levels(dataResults$mech)
 prop_na <- sort(unique(dataResults$pm))
 variables <- unique(dataResults$vars)[1]
 parameter <- unique(dataResults$stat)[1]
 method_vector <- levels(dataResults$method)[1:4]
 npc_range <- c(0, 12)
-y_axis_range <- c(0, 10)
+y_axis_range <- c(0, 60)
 
 # Use the function
 plot_simulation(
@@ -64,7 +64,7 @@ plot_simulation(
     parameter = unique(dataResults$stat)[1],
     method_vector = levels(dataResults$method)[1:4],
     npc_range = c(0, 12),
-    y_axis_range = c(0, 40)
+    y_axis_range = c(0, 60)
 )
 
 }

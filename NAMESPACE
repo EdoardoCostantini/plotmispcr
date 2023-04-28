@@ -2,6 +2,7 @@
 
 export(plotResults)
 export(plot_simulation)
+export(plot_trace)
 export(server)
 export(ui_call)
 import(dplyr)
