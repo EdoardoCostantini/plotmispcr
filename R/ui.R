@@ -28,17 +28,23 @@ ui_call <- function() {
                         shiny::fluidRow(
                             shiny::column(
                                 width = 4,
-                                shiny::titlePanel(
-                                    shiny::h3("Simulation  study", align = "center")
-                                ),
+                                shiny::HTML(
+                                    "<br>
+                                    This tab allows you to plot the results of the simulation study reported in the article --- .
+                                    In the following tabs, you can choose to change the values of different experimental factors to plot results that were omitted from the article.
+                                    <br>
+                                    <br>"
+                                    ),
                                 shiny::tabsetPanel(
                                     type = "tabs",
                                     shiny::tabPanel(
-                                        title = "Introduction",
-                                        shiny::htmlOutput("introduction")
-                                    ),
-                                    shiny::tabPanel(
                                         title = "1. Simulation outcomes",
+                                                                        shiny::HTML(
+                                    "<br>
+                                    Here you can change what outcome measures to plot.
+                                    <br>
+                                    <br>"
+                                    ),
                                         selectInput(
                                             inputId = "plot_sim_y_axis",
                                             label = "Outcome measure",
@@ -67,6 +73,12 @@ ui_call <- function() {
                                     ),
                                     shiny::tabPanel(
                                         title = "2. Data generation",
+                                        shiny::HTML(
+                                    "<br>
+                                    Here you can change how the data were generated.
+                                    <br>
+                                    <br>"
+                                    ),
                                         radioButtons(
                                             inputId = "plot_sim_nla",
                                             label = "Number of latent variables",
@@ -90,6 +102,12 @@ ui_call <- function() {
                                     ),
                                     shiny::tabPanel(
                                         title = "3. Missing data treatments",
+                                        shiny::HTML(
+                                    "<br>
+                                    Here you can change how the missing data were generated
+                                    <br>
+                                    <br>"
+                                    ),
                                         checkboxGroupInput("plot_sim_method",
                                             "Imputation methods to compare:",
                                             choices = levels(dataResults$method),
@@ -110,9 +128,6 @@ ui_call <- function() {
                             shiny::column(
                                 width = 8,
                                 shiny::fluidRow(
-                                    shiny::titlePanel(
-                                        shiny::h3("Plots", align = "center")
-                                    ),
                                     shiny::plotOutput("plot"),
 
                                     # Silent extraction of size
