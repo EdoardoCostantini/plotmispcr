@@ -194,7 +194,7 @@ plotResults <- function() {
                                 shiny::tabsetPanel(
                                     type = "tabs",
                                     shiny::tabPanel(
-                                        title = "Description",
+                                        title = "Introduction",
                                         ""
                                     ),
                                     shiny::tabPanel(
