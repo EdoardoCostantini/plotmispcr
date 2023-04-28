@@ -115,7 +115,8 @@ ui_call <- function() {
                                         selectInput(
                                             inputId = "plot_sim_y_axis",
                                             label = "Outcome measure",
-                                            choices = c("RB", "PRB", "CIC", "CIW", "mcsd")[2]
+                                            choices = c("RB", "PRB", "CIC", "CIW", "mcsd"),
+                                            selected = "PRB"
                                         ),
                                         radioButtons(
                                             inputId = "plot_sim_stat",
