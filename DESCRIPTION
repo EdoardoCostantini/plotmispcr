@@ -1,6 +1,6 @@
 Package: plot.mi.spcr
 Title: Plot mi-spcr results
-Version: 1.0.0
+Version: 2.0.0
 Authors@R: 
     person("Edoardo", "Costantini", , "e.costantini@tilburguniversity.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9581-9913"))
