@@ -95,7 +95,7 @@ server <- function(input, output, session) {
         shinyWidgets::updateSliderTextInput(session,
             inputId = "plot_sim_npcs",
             choices = npcs_to_plot,
-            selected = c(1, default_max_npcs)
+            selected = c(0, default_max_npcs)
         )
     })
 
