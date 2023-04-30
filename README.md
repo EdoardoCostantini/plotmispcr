@@ -15,15 +15,18 @@ You can interact with the results from the study [mi-spcr](https://github.com/Ed
 
 ## Plots
 
-### Simulation study results
-
-By using the R function:
+To start the shiny apps and interact with the plots, open an R session and load the package:
 
 ```
-plot.mi.spcr::plotResults()
+library("plotmipca")
 ```
 
-a shiny app is started that allows you to plot the results of the simulation study.
+Then, run the following command in the R console:
+
+```
+plotResults()
+```
+
 You can plot the results for the values of the following simulation study experimental factors:
 
 - Number of latent variables used to generate the data (2, 10, 50)
@@ -59,16 +62,3 @@ You can plot the results for the values of the following simulation study experi
 
 - Variables considered
 - Zoom on the y-axis
-
-### Convergence plots
-
-By using the R function:
-
-```
-plot.mi.spcr::plotMids()
-```
-
-a shiny app is started that allows you to study the trace plots for MI imputation algorithms used in the simulation study.
-The convergence check was performed for the most challenging data condition:
-
-For every imputation method, you can check the trace plot with different numbers of PCs.You can also easily change the range of iterations considered.
