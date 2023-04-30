@@ -79,10 +79,23 @@ server <- function(input, output, session) {
             )$npcs
         )
         npcs_to_plot <- sort(npcs_to_plot)
+
+        # Which max?
+        if(input$plot_sim_nla == 2){
+            default_max_npcs <- max(npcs_to_plot)
+        }
+        if(input$plot_sim_nla == 10) {
+            default_max_npcs <- 12
+        }
+        if (input$plot_sim_nla == 50) {
+            default_max_npcs <- 20
+        }
+
+        # Update input slider
         shinyWidgets::updateSliderTextInput(session,
             inputId = "plot_sim_npcs",
             choices = npcs_to_plot,
-            selected = range(npcs_to_plot)
+            selected = c(1, default_max_npcs)
         )
     })
 
@@ -90,7 +103,7 @@ server <- function(input, output, session) {
     observe({
         # Subset active data
         active_npcs <- (dataMids$cnds %>%
-            filter(method == input$plot_case_method))$npcs
+            filter(method == input$plot_sim_method))$npcs
 
         # Update input
         shiny::updateSelectInput(
