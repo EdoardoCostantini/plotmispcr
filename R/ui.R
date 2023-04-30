@@ -21,32 +21,36 @@ ui_call <- function() {
                     selected = "About this Shiny app",
                     shiny::tabPanel(
                         title = "About this Shiny app",
+                        shiny::column(
+                        width = 8,
+                        offset = 2,
                         shiny::HTML(
                             "<br>
                             This Shiny app accompanies the paper:
                             <br>
                             <br>
-                            Supervised dimensionality reduction for multiple imputation by chained equations by bla bla
+                            <a href=''>Costantini, E., Lang, K. M., Sijtsma, K., & Reeskens, T. (2022). Supervised dimensionality reduction for multiple imputation by chained equations. <i>coming soon</i>.</a>
                             <br>
                             <br>
                             With this app, the user can:
                             <ul>
-                                <li>Interact with the results presented in the paper by going to the <b>Simulation study</b> tab.</li>
-                                <li>Interact with trace plots showing the convergence of the methods compared in the simulation study by going to the <b>Convergence checks</b> tab.</li>
+                                <li>Interact with the simulation study results presented in the paper by using <b>Module 1</b>.</li>
+                                <li>Interact with trace plots showing the convergence of the methods compared in the simulation study by using <b>Module 2</b>.</li>
                             </ul>
                             For questions and feedback, please <a href = 'mailto:e.costantini@tilburguniversity.edu'>send me an email</a>.
                             "
                         )
+                        )
                     ),
                     shiny::tabPanel(
-                        title = "Simulation study",
+                        title = "Module 1: Simulation study",
                         shiny::fluidRow(
                             shiny::column(
                                 width = 4,
                                 shiny::HTML(
                                     "<br>
-                                    This tab allows you to plot the results of the simulation study reported in the article --- .
-                                    In the following tabs, you can choose to change the values of different experimental factors to plot results that were omitted from the article.
+                                    This tab allows you to plot the results of the simulation study reported in the article.
+                                    You change the values of the experimental factors to plot the results you are most interested in.
                                     <br>
                                     <br>"
                                 ),
@@ -154,7 +158,7 @@ ui_call <- function() {
                         )
                     ),
                     shiny::tabPanel(
-                        title = "Convergence checks",
+                        title = "Module 2: Convergence checks",
                         shiny::fluidRow(
                             shiny::column(
                                 width = 4,
