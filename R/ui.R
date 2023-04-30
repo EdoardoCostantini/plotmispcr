@@ -192,7 +192,7 @@ ui_call <- function() {
                                     label = "Iteration range",
                                     hide_min_max = TRUE,
                                     choices = 0:100,
-                                    selected = c(0, 25),
+                                    selected = c(0, 100),
                                     grid = FALSE
                                 )
                             ),
