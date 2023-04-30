@@ -103,7 +103,7 @@ server <- function(input, output, session) {
     observe({
         # Subset active data
         active_npcs <- (dataMids$cnds %>%
-            filter(method == input$plot_sim_method))$npcs
+            filter(method == input$plot_case_method))$npcs
 
         # Update input
         shiny::updateSelectInput(
