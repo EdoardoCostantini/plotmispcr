@@ -150,4 +150,27 @@ server <- function(input, output, session) {
             )
         }
     )
+
+    # Supplementary material plot ----------------------------------------------
+    output$plot_sup_npcs <- renderPlot(
+        res = 96,
+        height = 750,
+        {
+            # Use the function
+            plot_many_pcs(
+                results = dataResults,
+                outcome = input$plot_many_pcs_y_axis,
+                n_latent = input$plot_many_pcs_nla,
+                na_mechanism = input$plot_many_pcs_mech,
+                prop_na = input$plot_many_pcs_pm,
+                variables = input$plot_many_pcs_vars,
+                parameter = input$plot_many_pcs_stat,
+                method_vector = input$plot_many_pcs_method,
+                npc_range = input$plot_many_pcs_npcs,
+                y_axis_range = input$plot_many_pcs_y_range
+            )
+        }
+    )
+    
+
 }

@@ -206,6 +206,121 @@ ui_call <- function() {
                             style = "border-left: 1px solid; border-left-color: #DDDDDD"
                         )
                     )
+                ),
+                shiny::tabPanel(
+                    title = "Supplementary material",
+                    shiny::fluidRow(
+                        shiny::column(
+                            width = 4,
+                            shiny::HTML(
+                                "<br>
+                                    This tab allows you to plot the supplementary material results.
+                                    You change the values of the experimental factors to plot the results you are most interested in.
+                                    <br>
+                                    <br>"
+                            ),
+                            shiny::navlistPanel(
+                                widths = c(11, 12),
+                                shiny::tabPanel(
+                                    title = "1. Data generation",
+                                    shiny::HTML(
+                                        "<br>
+                                            Here you can change how the data were generated.
+                                            <br>
+                                            <br>"
+                                    ),
+                                    radioButtons(
+                                        inputId = "plot_many_pcs_nla",
+                                        label = "Number of latent variables",
+                                        choices = sort(unique(dataResults$nla)),
+                                        selected = sort(unique(dataResults$nla))[2],
+                                        inline = TRUE
+                                    ),
+                                    radioButtons(
+                                        inputId = "plot_many_pcs_pm",
+                                        label = "Proportion of missing values",
+                                        choices = sort(unique(dataResults$pm)),
+                                        selected = sort(unique(dataResults$pm))[3],
+                                        inline = TRUE
+                                    ),
+                                    radioButtons("plot_many_pcs_mech",
+                                        "Missing data mechanism",
+                                        choices = levels(dataResults$mech),
+                                        selected = levels(dataResults$mech)[2],
+                                        inline = TRUE
+                                    )
+                                ),
+                                shiny::tabPanel(
+                                    title = "2. Missing data treatments",
+                                    shiny::HTML(
+                                        "<br>
+                                            Here you can change which missing data treatments to show.
+                                            <br>
+                                            <br>"
+                                    ),
+                                    checkboxGroupInput("plot_many_pcs_method",
+                                        "Imputation methods to compare:",
+                                        choices = levels(dataResults$method)[c(1:4)],
+                                        selected = levels(dataResults$method)[c(1:2, 4)],
+                                        inline = TRUE
+                                    ),
+                                    shinyWidgets::sliderTextInput(
+                                        inputId = "plot_many_pcs_npcs",
+                                        label = "Number of principal components",
+                                        hide_min_max = TRUE,
+                                        choices = sort(unique(dataResults$npcs)),
+                                        selected = range(dataResults$npcs),
+                                        grid = TRUE
+                                    )
+                                ),
+                                shiny::tabPanel(
+                                    title = "3. Simulation outcomes",
+                                    shiny::HTML(
+                                        "<br>
+                                            Here you can change what outcome measures to plot.
+                                            <br>
+                                            <br>"
+                                    ),
+                                    selectInput(
+                                        inputId = "plot_many_pcs_y_axis",
+                                        label = "Outcome measure",
+                                        choices = c("RB", "PRB", "CIC", "CIW", "mcsd"),
+                                        selected = "PRB"
+                                    ),
+                                    radioButtons(
+                                        inputId = "plot_many_pcs_stat",
+                                        label = "Statistic",
+                                        inline = TRUE,
+                                        choices = unique(dataResults$stat)
+                                    ),
+                                    radioButtons(
+                                        inputId = "plot_many_pcs_vars",
+                                        label = "Variables",
+                                        inline = TRUE,
+                                        choices = unique(dataResults$vars)
+                                    ),
+                                    shinyWidgets::sliderTextInput(
+                                        inputId = "plot_many_pcs_y_range",
+                                        label = "Y-axis range",
+                                        hide_min_max = FALSE,
+                                        choices = 0:100,
+                                        selected = c(0, 60),
+                                        grid = FALSE
+                                    )
+                                )
+                            )
+                        ),
+                        shiny::column(
+                            width = 8,
+                            shiny::fluidRow(
+                                shiny::plotOutput("plot_sup_npcs"),
+
+                                # Silent extraction of size
+                                shinybrowser::detect(),
+                            ),
+                            style = "border-left: 1px solid; border-left-color: #DDDDDD"
+                        )
+                    )
                 )
             )
         )
