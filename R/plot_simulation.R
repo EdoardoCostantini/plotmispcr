@@ -41,7 +41,7 @@
 #' )
 #'
 #' @export
-plot_simulation <- function(results, outcome, y_axis_range, parameter, variables, n_latent, na_mechanism, prop_na, method_vector, npc_range, point_size = 2.5) {
+plot_simulation <- function(results, outcome, y_axis_range, parameter, variables, n_latent, na_mechanism, prop_na, method_vector, npc_range, point_size = 2) {
     # Filter the data as requested
     results_filtered <- results %>%
         filter(
@@ -70,6 +70,7 @@ plot_simulation <- function(results, outcome, y_axis_range, parameter, variables
             size = point_size
         ) +
         scale_x_continuous(
+            name = "Number of PCs retained",
             breaks = sort(unique(results$npcs)),
             sort(unique(results$npcs))
         ) +
@@ -89,16 +90,15 @@ plot_simulation <- function(results, outcome, y_axis_range, parameter, variables
             labeller = labeller(
                 .rows = label_both,
                 .cols = label_value
-            ),
-            switch = "y"
+            )
         ) +
+
+        # Theme
         theme(
             # Text
-            text = element_text(size = 12),
-            strip.text.y.right = element_text(angle = 0),
-            plot.title = element_text(hjust = 0.5),
-            axis.title = element_text(size = 10),
-            axis.title.x = element_blank(),
+            text = element_text(size = 10),
+            axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)),
+            axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
             # Legend
             legend.title = element_blank(),
             legend.position = "bottom",

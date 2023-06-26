@@ -88,7 +88,7 @@ server <- function(input, output, session) {
             default_max_npcs <- 12
         }
         if (input$plot_sim_nla == 50) {
-            default_max_npcs <- 20
+            default_max_npcs <- 60
         }
 
         # Update input slider

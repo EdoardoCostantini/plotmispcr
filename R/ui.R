@@ -64,14 +64,14 @@ ui_call <- function() {
                                 inputId = "plot_sim_pm",
                                 label = "Proportion of missing values",
                                 choices = sort(unique(dataResults$pm)),
-                                selected = sort(unique(dataResults$pm))[c(2, 3)],
+                                selected = sort(unique(dataResults$pm))[3],
                                 inline = TRUE
                             ),
                             checkboxGroupInput("plot_sim_mech",
                                 "Missing data mechanism",
                                 inline = TRUE,
                                 choices = levels(dataResults$mech),
-                                selected = levels(dataResults$mech)
+                                selected = levels(dataResults$mech)[2]
                             ),
                             checkboxGroupInput("plot_sim_method",
                                 "Imputation methods to compare:",
