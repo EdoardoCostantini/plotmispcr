@@ -113,14 +113,30 @@ ui_call <- function() {
                                     ),
                                 )
                             ),
-                            shinyWidgets::sliderTextInput(
-                                inputId = "plot_sim_y_range",
-                                label = "Y-axis range",
-                                hide_min_max = FALSE,
-                                choices = 0:100,
-                                selected = c(0, 60),
-                                grid = FALSE
-                            )
+                            shiny::fluidRow(
+                                shiny::column(
+                                    width = 6,
+                                    shinyWidgets::sliderTextInput(
+                                        inputId = "plot_sim_y_range",
+                                        label = "Y-axis range",
+                                        hide_min_max = FALSE,
+                                        choices = 0:100,
+                                        selected = c(0, 60),
+                                        grid = FALSE
+                                    ),
+                                ),
+                                shiny::column(
+                                    width = 6,
+                                    shiny::sliderInput(
+                                        inputId = "plot_sim_point_size",
+                                        label = "Point size",
+                                        min = 0,
+                                        max = 2,
+                                        step = 1,
+                                        value = 2
+                                    )
+                                )
+                            ),
                         ),
                         shiny::column(
                             width = 8,

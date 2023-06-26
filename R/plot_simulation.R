@@ -24,6 +24,7 @@
 #' method_vector <- levels(dataResults$method)[1:4]
 #' npc_range <- c(0, 12)
 #' y_axis_range <- c(0, 60)
+#' point_size <- 2.5
 #'
 #' # Use the function
 #' plot_simulation(
@@ -40,7 +41,7 @@
 #' )
 #'
 #' @export
-plot_simulation <- function(results, outcome, y_axis_range, parameter, variables, n_latent, na_mechanism, prop_na, method_vector, npc_range) {
+plot_simulation <- function(results, outcome, y_axis_range, parameter, variables, n_latent, na_mechanism, prop_na, method_vector, npc_range, point_size = 2.5) {
     # Filter the data as requested
     results_filtered <- results %>%
         filter(
@@ -66,7 +67,7 @@ plot_simulation <- function(results, outcome, y_axis_range, parameter, variables
             aes(
                 shape = .data[["method"]]
             ),
-            size = 2.5
+            size = point_size
         ) +
         scale_x_continuous(
             breaks = sort(unique(results$npcs)),

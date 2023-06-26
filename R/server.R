@@ -131,7 +131,8 @@ server <- function(input, output, session) {
                 parameter = input$plot_sim_stat,
                 method_vector = input$plot_sim_method,
                 npc_range = input$plot_sim_npcs,
-                y_axis_range = input$plot_sim_y_range
+                y_axis_range = input$plot_sim_y_range,
+                point_size = input$plot_sim_point_size
             )
         }
     )
