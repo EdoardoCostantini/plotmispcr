@@ -154,7 +154,7 @@ server <- function(input, output, session) {
     # Supplementary material plot ----------------------------------------------
     output$plot_sup_npcs <- renderPlot(
         res = 96,
-        height = 750,
+        # height = 750,
         {
             # Use the function
             plot_many_pcs(
@@ -171,6 +171,27 @@ server <- function(input, output, session) {
             )
         }
     )
-    
+
+    output$text_plot_sup_npcs_intro <- renderUI(
+        withMathJax(
+            helpText(
+                'An interesting similarity between the SDR methods emerged.
+                The more components are used, the closer their performance becomes to that of MI-PCR.
+                Both MI-SPCR and MI-PCovR approaches seemed to perform best when using as few components as possible.
+                The more components were used, the higher the bias.
+                This result is due to a common characteristic between the two approaches.
+                The more components we ask for, the less supervision the two methods can exercise when computing the components.
+                The more components we want, the lower the importance of supervision in defining the components.
+                In MI-SPCR, the cause of this result is the threshold value \\bm{\\rho}, while in MI-PCovR, the cause lies in the choice of $\alpha_{ML}$.'
+            )
+        )
+    )
+
+    output$ex4 <- renderUI({
+        invalidateLater(5000, session)
+        x <- round(rcauchy(1), 3)
+        withMathJax("If \\(X\\) is a Cauchy random variable, then
+                    $$P(X \\leq %.03f ) = %.03f$$")
+    })
 
 }

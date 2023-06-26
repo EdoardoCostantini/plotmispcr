@@ -8,6 +8,7 @@
 ui_call <- function() {
     # Define ui object
     ui <- fluidPage(
+        shiny::withMathJax(),
         shiny::titlePanel(
             shiny::h1("Supervised dimensionality reduction for MICE", align = "center")
         ),
@@ -213,101 +214,32 @@ ui_call <- function() {
                         shiny::column(
                             width = 4,
                             shiny::HTML(
-                                "<br>
-                                    This tab allows you to plot the supplementary material results.
-                                    You change the values of the experimental factors to plot the results you are most interested in.
-                                    <br>
-                                    <br>"
-                            ),
-                            shiny::navlistPanel(
-                                widths = c(11, 12),
+                                "An interesting similarity between the SDR methods emerged.
+                The more components are used, the closer their performance becomes to that of MI-PCR.
+                Both MI-SPCR and MI-PCovR approaches seemed to perform best when using as few components as possible.
+                The more components were used, the higher the bias.
+                This result is due to a common characteristic between the two approaches.
+                The more components we ask for, the less supervision the two methods can exercise when computing the components.
+                The more components we want, the lower the importance of supervision in defining the components.
+                In MI-SPCR, the cause of this result is the threshold value \\(\\pi\\), while in MI-PCovR, the cause lies in the choice of $$\\alpha_{ML} \\leq %.03f ) = %.03f$$"
+                    ),
+                            shiny::tabsetPanel(
                                 shiny::tabPanel(
-                                    title = "1. Data generation",
+                                    title = "A",
                                     shiny::HTML(
-                                        "<br>
-                                            Here you can change how the data were generated.
-                                            <br>
-                                            <br>"
-                                    ),
-                                    radioButtons(
-                                        inputId = "plot_many_pcs_nla",
-                                        label = "Number of latent variables",
-                                        choices = sort(unique(dataResults$nla)),
-                                        selected = sort(unique(dataResults$nla))[2],
-                                        inline = TRUE
-                                    ),
-                                    radioButtons(
-                                        inputId = "plot_many_pcs_pm",
-                                        label = "Proportion of missing values",
-                                        choices = sort(unique(dataResults$pm)),
-                                        selected = sort(unique(dataResults$pm))[3],
-                                        inline = TRUE
-                                    ),
-                                    radioButtons("plot_many_pcs_mech",
-                                        "Missing data mechanism",
-                                        choices = levels(dataResults$mech),
-                                        selected = levels(dataResults$mech)[2],
-                                        inline = TRUE
-                                    )
+                                        "An irrational number \\(\\sqrt{2}\\)
+                                            and a fraction $$1-\\frac{1}{2}$$. Can I add a \\pi"
+                                            ),
+                                    shiny::HTML("If \\(X\\) is a Cauchy random variable, then
+                    $$P(X \\leq %.03f ) = %.03f$$")
                                 ),
                                 shiny::tabPanel(
-                                    title = "2. Missing data treatments",
-                                    shiny::HTML(
-                                        "<br>
-                                            Here you can change which missing data treatments to show.
-                                            <br>
-                                            <br>"
-                                    ),
-                                    checkboxGroupInput("plot_many_pcs_method",
-                                        "Imputation methods to compare:",
-                                        choices = levels(dataResults$method)[c(1:4)],
-                                        selected = levels(dataResults$method)[c(1:2, 4)],
-                                        inline = TRUE
-                                    ),
-                                    shinyWidgets::sliderTextInput(
-                                        inputId = "plot_many_pcs_npcs",
-                                        label = "Number of principal components",
-                                        hide_min_max = TRUE,
-                                        choices = sort(unique(dataResults$npcs)),
-                                        selected = range(dataResults$npcs),
-                                        grid = TRUE
-                                    )
+                                    title = "B",
+                                    shiny::HTML("and a fact about \\(\\pi\\):
+           $$\\frac2\\pi = \\frac{\\sqrt2}2 \\cdot
+           \\frac{\\sqrt{2+\\sqrt2}}2 \\cdot
+           \\frac{\\sqrt{2+\\sqrt{2+\\sqrt2}}}2 \\cdots$$")
                                 ),
-                                shiny::tabPanel(
-                                    title = "3. Simulation outcomes",
-                                    shiny::HTML(
-                                        "<br>
-                                            Here you can change what outcome measures to plot.
-                                            <br>
-                                            <br>"
-                                    ),
-                                    selectInput(
-                                        inputId = "plot_many_pcs_y_axis",
-                                        label = "Outcome measure",
-                                        choices = c("RB", "PRB", "CIC", "CIW", "mcsd"),
-                                        selected = "PRB"
-                                    ),
-                                    radioButtons(
-                                        inputId = "plot_many_pcs_stat",
-                                        label = "Statistic",
-                                        inline = TRUE,
-                                        choices = unique(dataResults$stat)
-                                    ),
-                                    radioButtons(
-                                        inputId = "plot_many_pcs_vars",
-                                        label = "Variables",
-                                        inline = TRUE,
-                                        choices = unique(dataResults$vars)
-                                    ),
-                                    shinyWidgets::sliderTextInput(
-                                        inputId = "plot_many_pcs_y_range",
-                                        label = "Y-axis range",
-                                        hide_min_max = FALSE,
-                                        choices = 0:100,
-                                        selected = c(0, 60),
-                                        grid = FALSE
-                                    )
-                                )
                             )
                         ),
                         shiny::column(
@@ -319,6 +251,87 @@ ui_call <- function() {
                                 shinybrowser::detect(),
                             ),
                             style = "border-left: 1px solid; border-left-color: #DDDDDD"
+                        )
+                    ),
+                    shiny::fluidRow(
+                        shiny::column(
+                            width = 4,
+                            shiny::HTML(
+                                "<br>
+                                            Here you can change how the data were generated.
+                                            <br>
+                                            <br>"
+                            ),
+                            radioButtons(
+                                inputId = "plot_many_pcs_nla",
+                                label = "Number of latent variables",
+                                choices = sort(unique(dataResults$nla)),
+                                selected = sort(unique(dataResults$nla))[2],
+                                inline = TRUE
+                            ),
+                            radioButtons(
+                                inputId = "plot_many_pcs_pm",
+                                label = "Proportion of missing values",
+                                choices = sort(unique(dataResults$pm)),
+                                selected = sort(unique(dataResults$pm))[3],
+                                inline = TRUE
+                            ),
+                            radioButtons("plot_many_pcs_mech",
+                                "Missing data mechanism",
+                                choices = levels(dataResults$mech),
+                                selected = levels(dataResults$mech)[2],
+                                inline = TRUE
+                            )
+                        ),
+                        shiny::column(
+                            width = 4,
+                            shiny::HTML(
+                                "<br>
+                                Here you can change which missing data treatments to show.
+                                <br>
+                                <br>"
+                            ),
+                            checkboxGroupInput("plot_many_pcs_method",
+                                "Imputation methods to compare:",
+                                choices = levels(dataResults$method)[c(1:4)],
+                                selected = levels(dataResults$method)[c(1:2, 4)],
+                                inline = TRUE
+                            ),
+                            shinyWidgets::sliderTextInput(
+                                inputId = "plot_many_pcs_npcs",
+                                label = "Number of principal components",
+                                hide_min_max = TRUE,
+                                choices = sort(unique(dataResults$npcs)),
+                                selected = range(dataResults$npcs),
+                                grid = TRUE
+                            )
+                        ),
+                        shiny::column(
+                            width = 4,
+                            shiny::HTML(
+                                "<br>
+                                            Here you can change what outcome measures to plot.
+                                            <br>
+                                            <br>"
+                            ),
+                            selectInput(
+                                inputId = "plot_many_pcs_y_axis",
+                                label = "Outcome measure",
+                                choices = c("PRB", "CIC"),
+                                selected = "PRB"
+                            ),
+                            radioButtons(
+                                inputId = "plot_many_pcs_stat",
+                                label = "Statistic",
+                                inline = TRUE,
+                                choices = unique(dataResults$stat)
+                            ),
+                            radioButtons(
+                                inputId = "plot_many_pcs_vars",
+                                label = "Variables",
+                                inline = TRUE,
+                                choices = unique(dataResults$vars)
+                            )
                         )
                     )
                 )
