@@ -56,13 +56,18 @@ plot_simulation <- function(results, outcome, y_axis_range, parameter, variables
 
     # Make plot
     results_filtered %>%
-        ggplot(aes_string(
-            x = "npcs",
-            y = outcome,
-            group = "method"
+        ggplot(aes(
+            x = .data[["npcs"]],
+            y = .data[[outcome]],
+            group = .data[["method"]]
         )) +
         geom_line(col = "darkgray") +
-        geom_point(aes_string(shape = "method"), size = 2.5) +
+        geom_point(
+            aes(
+                shape = .data[["method"]]
+            ),
+            size = 2.5
+        ) +
         scale_x_continuous(
             breaks = sort(unique(results$npcs)),
             sort(unique(results$npcs))
