@@ -137,6 +137,7 @@ ui_call <- function() {
                                     )
                                 )
                             ),
+                            style = "border-right: 1px solid; border-right-color: #DDDDDD"
                         ),
                         shiny::column(
                             width = 8,
@@ -145,8 +146,7 @@ ui_call <- function() {
 
                                 # Silent extraction of size
                                 shinybrowser::detect(),
-                            ),
-                            style = "border-left: 1px solid; border-left-color: #DDDDDD"
+                            )
                         )
                     )
                 ),
@@ -187,7 +187,8 @@ ui_call <- function() {
                                 choices = 0:100,
                                 selected = c(0, 100),
                                 grid = FALSE
-                            )
+                            ),
+                            style = "border-right: 1px solid; border-right-color: #DDDDDD"
                         ),
                         shiny::column(
                             width = 8,
@@ -196,8 +197,7 @@ ui_call <- function() {
 
                                 # Silent extraction of size
                                 shinybrowser::detect(),
-                            ),
-                            style = "border-left: 1px solid; border-left-color: #DDDDDD"
+                            )
                         )
                     )
                 )
