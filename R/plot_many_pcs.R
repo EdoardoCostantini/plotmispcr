@@ -1,6 +1,6 @@
-#' Plot simulation results
+#' Plot many pcs simulation results
 #'
-#' Generate the main plot for the simulation study.
+#' Generate a plot to compare the performance trends for wide ranges of npcs.
 #'
 #' @param results object containing results produced by the simulation study
 #' @param n_items experimental factor value: number of items
@@ -16,18 +16,17 @@
 #' # Define example inputs
 #' results <- dataResults
 #' outcome <- "PRB"
-#' n_latent <- dataResults$nla[2]
-#' na_mechanism <- levels(dataResults$mech)
-#' prop_na <- sort(unique(dataResults$pm))
+#' n_latent <- unique(dataResults$nla)[3]
+#' na_mechanism <- levels(dataResults$mech)[1]
+#' prop_na <- sort(unique(dataResults$pm))[3]
 #' variables <- unique(dataResults$vars)[1]
 #' parameter <- unique(dataResults$stat)[1]
 #' method_vector <- levels(dataResults$method)[1:4]
 #' npc_range <- c(0, 12)
 #' y_axis_range <- c(0, 60)
-#' point_size <- 2.5
 #'
 #' # Use the function
-#' plot_simulation(
+#' plot_many_pcs(
 #'     results = dataResults,
 #'     outcome = "PRB",
 #'     n_latent = dataResults$nla[2],
@@ -36,18 +35,19 @@
 #'     variables = unique(dataResults$vars)[1],
 #'     parameter = unique(dataResults$stat)[1],
 #'     method_vector = levels(dataResults$method)[1:4],
-#'     npc_range = c(0, 12),
+#'     npc_range = c(0, 149),
 #'     y_axis_range = c(0, 60)
 #' )
 #'
 #' @export
-plot_simulation <- function(results, outcome, y_axis_range, parameter, variables, n_latent, na_mechanism, prop_na, method_vector, npc_range, point_size = 2) {
+plot_many_pcs <- function(results, outcome, y_axis_range, parameter, variables, n_latent, na_mechanism, prop_na, method_vector, npc_range) {
+    
     # Filter the data as requested
     results_filtered <- results %>%
         filter(
             nla == n_latent,
-            mech %in% na_mechanism,
-            pm %in% prop_na,
+            mech == na_mechanism,
+            pm == prop_na,
             vars == variables,
             stat == parameter,
             method %in% method_vector,
@@ -62,47 +62,64 @@ plot_simulation <- function(results, outcome, y_axis_range, parameter, variables
             y = .data[[outcome]],
             group = .data[["method"]]
         )) +
-        geom_line(col = "darkgray") +
-        geom_point(
+        # geom_point(color = "darkgray") +
+        geom_line(
             aes(
-                shape = .data[["method"]]
+                linetype = .data[["method"]],
+                color = .data[["method"]]
             ),
-            size = point_size
+            linewidth = .6
         ) +
-        scale_x_continuous(
-            name = "Number of PCs retained",
-            breaks = sort(unique(results$npcs)),
-            sort(unique(results$npcs))
+        # scale_x_continuous(
+        #     breaks = sort(unique(results$npcs)),
+        #     sort(unique(results$npcs))
+        # ) +
+        scale_color_manual(
+            values = c(
+                "spcr" = "black",
+                "pcovr" = "black",
+                "plsr" = "black",
+                "pcr" = "darkgray"
+            )
+        ) +
+        scale_linetype_manual(
+            values = c(
+                "spcr" = "solid",
+                "pcovr" = "longdash",
+                "plsr" = "dotted",
+                "pcr" = "solid"
+            )
         ) +
 
-        # Zoomable y-axis
-        coord_cartesian(ylim = c(
-            y_axis_range[1],
-            y_axis_range[2]
-        )) +
-
-        # Facet grid
-        facet_grid(
-            stats::reformulate(
-                "mech",
-                "pm"
+        # Legend
+        guides(
+            linetype = guide_legend(
+                keywidth = 5,
+                keyheight = 1,
+                label.position = "bottom",
+                reverse = TRUE
             ),
-            labeller = labeller(
-                .rows = label_both,
-                .cols = label_value
+            color = guide_legend(
+                keywidth = 5,
+                keyheight = 1,
+                label.position = "bottom",
+                reverse = TRUE
             )
         ) +
 
         # Theme
         theme(
             # Text
-            text = element_text(size = 10),
-            axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)),
-            axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
+            text = element_text(size = 12),
+            strip.text.y.right = element_text(angle = 0),
+            plot.title = element_text(hjust = 0.5),
+            axis.title = element_text(size = 10),
+            axis.title.x = element_blank(),
             # Legend
             legend.title = element_blank(),
             legend.position = "bottom",
             # Backgorund
             panel.background = element_rect(fill = NA, color = "gray")
         )
+
 }
