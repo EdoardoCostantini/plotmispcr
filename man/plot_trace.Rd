@@ -11,9 +11,9 @@ plot_trace(mids_data, method, npcs, iters = c(0, 25))
 
 \item{method}{unit character vector naming the method to display}
 
-\item{iters}{numeric vector containing the iteration bounds (from-to) to plot}
+\item{npcs}{integer defining the number of pcs to consider for the PCA-based procedures}
 
-\item{var}{unit character vector naming the variable to display}
+\item{iters}{numeric vector containing the iteration bounds (from-to) to plot}
 }
 \value{
 Returns the lattice plot

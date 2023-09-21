@@ -4,7 +4,7 @@
 #'
 #' @param mids_data object containing imputation history produced by the simulation study
 #' @param method unit character vector naming the method to display
-#' @param var unit character vector naming the variable to display
+#' @param npcs integer defining the number of pcs to consider for the PCA-based procedures
 #' @param iters numeric vector containing the iteration bounds (from-to) to plot
 #' @return Returns the lattice plot
 #' @author Edoardo Costantini, 2023
