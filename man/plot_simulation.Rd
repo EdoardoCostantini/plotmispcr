@@ -23,17 +23,23 @@ plot_simulation(
 
 \item{outcome}{performance measure to plot}
 
+\item{y_axis_range}{range of the outcome measure on the y-axis}
+
 \item{parameter}{estimated parameter of interest}
+
+\item{variables}{which variables should be plotted}
+
+\item{n_latent}{number of latent variables used in the data generating model}
+
+\item{na_mechanism}{missing data mechanism used to generate the data}
+
+\item{prop_na}{proportino of missing data generated per-variable}
 
 \item{method_vector}{experimental factor value: imputation methods considered}
 
 \item{npc_range}{experimental factor value: number of components considered}
 
-\item{n_items}{experimental factor value: number of items}
-
-\item{latent_structure}{experimental factor value: whether the latent structure is imposed or not}
-
-\item{categories}{experimental factor value: number of categories of discretized variables}
+\item{point_size}{size of the dots in the plot}
 }
 \value{
 Returns the ggplot
