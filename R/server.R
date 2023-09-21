@@ -41,13 +41,13 @@ server <- function(input, output, session) {
         # Define subset of data in use
         data_subset <- plot.mi.spcr::dataResults %>%
             filter(
-                nla == input$plot_sim_nla,
-                mech %in% input$plot_sim_mech,
-                pm %in% input$plot_sim_pm,
-                stat == input$plot_sim_stat,
-                method %in% input$plot_sim_method,
-                npcs <= input$plot_sim_npcs[2],
-                npcs >= input$plot_sim_npcs[1]
+                .data$nla == input$plot_sim_nla,
+                .data$mech %in% input$plot_sim_mech,
+                .data$pm %in% input$plot_sim_pm,
+                .data$stat == input$plot_sim_stat,
+                .data$method %in% input$plot_sim_method,
+                .data$npcs <= input$plot_sim_npcs[2],
+                .data$npcs >= input$plot_sim_npcs[1]
             )
 
         # Define low bound
@@ -75,7 +75,7 @@ server <- function(input, output, session) {
     observe({
         npcs_to_plot <- unique(
             (plot.mi.spcr::dataResults %>%
-                filter(nla == input$plot_sim_nla)
+                filter(.data$nla == input$plot_sim_nla)
             )$npcs
         )
         npcs_to_plot <- sort(npcs_to_plot)
@@ -103,7 +103,7 @@ server <- function(input, output, session) {
     observe({
         # Subset active data
         active_npcs <- (plot.mi.spcr::dataMids$cnds %>%
-            filter(method == input$plot_case_method))$npcs
+            filter(.data$method == input$plot_case_method))$npcs
 
         # Update input
         shiny::updateSelectInput(
