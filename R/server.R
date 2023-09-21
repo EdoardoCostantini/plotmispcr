@@ -88,14 +88,14 @@ server <- function(input, output, session) {
             default_max_npcs <- 12
         }
         if (input$plot_sim_nla == 50) {
-            default_max_npcs <- 20
+            default_max_npcs <- 60
         }
 
         # Update input slider
         shinyWidgets::updateSliderTextInput(session,
             inputId = "plot_sim_npcs",
             choices = npcs_to_plot,
-            selected = c(1, default_max_npcs)
+            selected = c(0, default_max_npcs)
         )
     })
 
@@ -131,7 +131,8 @@ server <- function(input, output, session) {
                 parameter = input$plot_sim_stat,
                 method_vector = input$plot_sim_method,
                 npc_range = input$plot_sim_npcs,
-                y_axis_range = input$plot_sim_y_range
+                y_axis_range = input$plot_sim_y_range,
+                point_size = input$plot_sim_point_size
             )
         }
     )
