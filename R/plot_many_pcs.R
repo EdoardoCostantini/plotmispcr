@@ -3,13 +3,15 @@
 #' Generate a plot to compare the performance trends for wide ranges of npcs.
 #'
 #' @param results object containing results produced by the simulation study
-#' @param n_items experimental factor value: number of items
+#' @param outcome performance measure to plot
+#' @param y_axis_range range of the outcome measure on the y-axis
 #' @param parameter estimated parameter of interest
-#' @param latent_structure experimental factor value: whether the latent structure is imposed or not
+#' @param variables which variables should be plotted
+#' @param n_latent number of latent variables used in the data generating model
+#' @param na_mechanism missing data mechanism used to generate the data
+#' @param prop_na proportino of missing data generated per-variable
 #' @param method_vector experimental factor value: imputation methods considered
 #' @param npc_range experimental factor value: number of components considered
-#' @param categories experimental factor value: number of categories of discretized variables
-#' @param outcome performance measure to plot
 #' @return Returns the ggplot
 #' @author Edoardo Costantini, 2023
 #' @examples
