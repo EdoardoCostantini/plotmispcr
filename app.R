@@ -1,4 +1,4 @@
-# Project:   plot.mi.spcr
+# Project:   plotmispcr
 # Objective: Instruction for deployment
 # Author:    Edoardo Costantini
 # Created:   2022-12-02
@@ -6,4 +6,4 @@
 # Notes: 
 
 pkgload::load_all(export_all = FALSE, helpers = FALSE, attach_testthat = FALSE)
-plot.mi.spcr::plotResults()
+plotmispcr::start_app()

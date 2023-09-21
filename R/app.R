@@ -1,4 +1,4 @@
-#' plotResults
+#' start_app
 #'
 #' Starts a Shiny app to interact with the results of the \href{https://github.com/EdoardoCostantini/mi-spcr}{mi-spcr} project.
 #'
@@ -48,7 +48,7 @@
 #' @import pkgload
 #' @return Shiny app UI.
 #'
-plotResults <- function() {
+start_app <- function() {
     shinyApp(
         ui = ui_call(),
         server

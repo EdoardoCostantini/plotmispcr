@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(plot.mi.spcr)
+library(plotmispcr)
 
-test_check("plot.mi.spcr")
+test_check("plotmispcr")

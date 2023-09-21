@@ -15,7 +15,7 @@ server <- function(input, output, session) {
         if (shinybrowser::get_width() < 768) {
             updateCheckboxGroupInput(session,
                 inputId = "mech",
-                selected = levels(plot.mi.spcr::dataResults$mech)[2]
+                selected = levels(plotmispcr::dataResults$mech)[2]
             )
         }
     })
@@ -23,7 +23,7 @@ server <- function(input, output, session) {
     # > Statistics and Variables requested ---------------------------------
     observe({
         choices_vars <- unique(
-            (plot.mi.spcr::dataResults %>%
+            (plotmispcr::dataResults %>%
                 filter(stat == input$plot_sim_stat)
             )$vars
         )
@@ -39,7 +39,7 @@ server <- function(input, output, session) {
     # > Zoom on the y-axis -------------------------------------------------
     observe({
         # Define subset of data in use
-        data_subset <- plot.mi.spcr::dataResults %>%
+        data_subset <- plotmispcr::dataResults %>%
             filter(
                 .data$nla == input$plot_sim_nla,
                 .data$mech %in% input$plot_sim_mech,
@@ -74,7 +74,7 @@ server <- function(input, output, session) {
     # > NPCs displayed by slider based on nla condition --------------------
     observe({
         npcs_to_plot <- unique(
-            (plot.mi.spcr::dataResults %>%
+            (plotmispcr::dataResults %>%
                 filter(.data$nla == input$plot_sim_nla)
             )$npcs
         )
@@ -102,7 +102,7 @@ server <- function(input, output, session) {
     # > Adjust NPCs option in traceplots based on methods ----------------------
     observe({
         # Subset active data
-        active_npcs <- (plot.mi.spcr::dataMids$cnds %>%
+        active_npcs <- (plotmispcr::dataMids$cnds %>%
             filter(.data$method == input$plot_case_method))$npcs
 
         # Update input
@@ -122,7 +122,7 @@ server <- function(input, output, session) {
         {
             # Use the function
             plot_simulation(
-                results = plot.mi.spcr::dataResults,
+                results = plotmispcr::dataResults,
                 outcome = input$plot_sim_y_axis,
                 n_latent = input$plot_sim_nla,
                 na_mechanism = input$plot_sim_mech,
@@ -144,7 +144,7 @@ server <- function(input, output, session) {
         {
             # Use the function
             plot_trace(
-                mids_data = plot.mi.spcr::dataMids,
+                mids_data = plotmispcr::dataMids,
                 method = input$plot_case_method,
                 npcs = input$plot_case_npcs,
                 iters = input$plot_case_iters
