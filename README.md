@@ -15,7 +15,7 @@ library("plot.mi.scpr")
 Then, run the following command in the R console:
 
 ```
-plotResults()
+start_app()
 ```
 
 You can interact with the the shiny app also [online](https://edoardocostantini.shinyapps.io/plotmispcr).

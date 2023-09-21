@@ -6,4 +6,4 @@
 # Notes: 
 
 pkgload::load_all(export_all = FALSE, helpers = FALSE, attach_testthat = FALSE)
-plot.mi.spcr::plotResults()
+plot.mi.spcr::start_app()
