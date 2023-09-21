@@ -3,13 +3,16 @@
 #' Generate the main plot for the simulation study.
 #'
 #' @param results object containing results produced by the simulation study
-#' @param n_items experimental factor value: number of items
+#' @param outcome performance measure to plot
+#' @param y_axis_range range of the outcome measure on the y-axis
 #' @param parameter estimated parameter of interest
-#' @param latent_structure experimental factor value: whether the latent structure is imposed or not
+#' @param variables which variables should be plotted
+#' @param n_latent number of latent variables used in the data generating model
+#' @param na_mechanism missing data mechanism used to generate the data
+#' @param prop_na proportino of missing data generated per-variable
 #' @param method_vector experimental factor value: imputation methods considered
 #' @param npc_range experimental factor value: number of components considered
-#' @param categories experimental factor value: number of categories of discretized variables
-#' @param outcome performance measure to plot
+#' @param point_size size of the dots in the plot
 #' @return Returns the ggplot
 #' @author Edoardo Costantini, 2023
 #' @examples
@@ -45,14 +48,14 @@ plot_simulation <- function(results, outcome, y_axis_range, parameter, variables
     # Filter the data as requested
     results_filtered <- results %>%
         filter(
-            nla == n_latent,
-            mech %in% na_mechanism,
-            pm %in% prop_na,
-            vars == variables,
-            stat == parameter,
-            method %in% method_vector,
-            npcs <= npc_range[2],
-            npcs >= npc_range[1]
+            .data$nla == n_latent,
+            .data$mech %in% na_mechanism,
+            .data$pm %in% prop_na,
+            .data$vars == variables,
+            .data$stat == parameter,
+            .data$method %in% method_vector,
+            .data$npcs <= npc_range[2],
+            .data$npcs >= npc_range[1]
         )
 
     # Make plot

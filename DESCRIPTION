@@ -5,7 +5,7 @@ Authors@R:
     person("Edoardo", "Costantini", , "e.costantini@tilburguniversity.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9581-9913"))
 Description: A shiny app to interact with the results of the mi-spcr study.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -19,6 +19,9 @@ Imports:
     mice,
     pkgload,
     shiny,
+    rlang,
     shinybrowser,
-    shinyWidgets,
-    usethis
+    shinyWidgets
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

@@ -56,35 +56,35 @@ ui_call <- function() {
                             radioButtons(
                                 inputId = "plot_sim_nla",
                                 label = "Number of latent variables",
-                                choices = sort(unique(dataResults$nla)),
-                                selected = sort(unique(dataResults$nla))[2],
+                                choices = sort(unique(plot.mi.spcr::dataResults$nla)),
+                                selected = sort(unique(plot.mi.spcr::dataResults$nla))[2],
                                 inline = TRUE
                             ),
                             checkboxGroupInput(
                                 inputId = "plot_sim_pm",
                                 label = "Proportion of missing values",
-                                choices = sort(unique(dataResults$pm)),
-                                selected = sort(unique(dataResults$pm))[3],
+                                choices = sort(unique(plot.mi.spcr::dataResults$pm)),
+                                selected = sort(unique(plot.mi.spcr::dataResults$pm))[3],
                                 inline = TRUE
                             ),
                             checkboxGroupInput("plot_sim_mech",
                                 "Missing data mechanism",
                                 inline = TRUE,
-                                choices = levels(dataResults$mech),
-                                selected = levels(dataResults$mech)[2]
+                                choices = levels(plot.mi.spcr::dataResults$mech),
+                                selected = levels(plot.mi.spcr::dataResults$mech)[2]
                             ),
                             checkboxGroupInput("plot_sim_method",
                                 "Imputation methods to compare:",
-                                choices = levels(dataResults$method),
-                                selected = levels(dataResults$method)[c(1:4, 8)],
+                                choices = levels(plot.mi.spcr::dataResults$method),
+                                selected = levels(plot.mi.spcr::dataResults$method)[c(1:4, 8)],
                                 inline = TRUE
                             ),
                             shinyWidgets::sliderTextInput(
                                 inputId = "plot_sim_npcs",
                                 label = "Number of principal components",
                                 hide_min_max = TRUE,
-                                choices = sort(unique(dataResults$npcs)),
-                                selected = range(dataResults$npcs),
+                                choices = sort(unique(plot.mi.spcr::dataResults$npcs)),
+                                selected = range(plot.mi.spcr::dataResults$npcs),
                                 grid = TRUE
                             ),
                             selectInput(
@@ -100,7 +100,7 @@ ui_call <- function() {
                                         inputId = "plot_sim_stat",
                                         label = "Statistic",
                                         inline = TRUE,
-                                        choices = unique(dataResults$stat)
+                                        choices = unique(plot.mi.spcr::dataResults$stat)
                                     ),
                                 ),
                                 shiny::column(
@@ -109,7 +109,7 @@ ui_call <- function() {
                                         inputId = "plot_sim_vars",
                                         label = "Variables",
                                         inline = TRUE,
-                                        choices = unique(dataResults$vars)
+                                        choices = unique(plot.mi.spcr::dataResults$vars)
                                     ),
                                 )
                             ),
@@ -171,14 +171,14 @@ ui_call <- function() {
                             ),
                             selectInput("plot_case_method",
                                 "Imputation method:",
-                                choices = levels(dataResults$method)[1:7],
-                                selected = levels(dataResults$method)[1]
+                                choices = levels(plot.mi.spcr::dataResults$method)[1:7],
+                                selected = levels(plot.mi.spcr::dataResults$method)[1]
                             ),
                             selectInput(
                                 inputId = "plot_case_npcs",
                                 label = "Number of PCs used",
-                                choices = sort(unique(dataResults$npcs))[-1],
-                                selected = sort(unique(dataResults$npcs))[2]
+                                choices = sort(unique(plot.mi.spcr::dataResults$npcs))[-1],
+                                selected = sort(unique(plot.mi.spcr::dataResults$npcs))[2]
                             ),
                             shinyWidgets::sliderTextInput(
                                 inputId = "plot_case_iters",

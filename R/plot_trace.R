@@ -4,7 +4,7 @@
 #'
 #' @param mids_data object containing imputation history produced by the simulation study
 #' @param method unit character vector naming the method to display
-#' @param var unit character vector naming the variable to display
+#' @param npcs integer defining the number of pcs to consider for the PCA-based procedures
 #' @param iters numeric vector containing the iteration bounds (from-to) to plot
 #' @return Returns the lattice plot
 #' @author Edoardo Costantini, 2023
@@ -31,10 +31,10 @@ plot_trace <- function(mids_data, method, npcs, iters = c(0, 25)) {
         "npcs-", npcs,
         "-method-", method
     )
-    cnd_id <- grep(cnd_search, names(dataMids$mids))
+    cnd_id <- grep(cnd_search, names(plot.mi.spcr::dataMids$mids))
 
     # Work with simple object name
-    x <- dataMids$mids[[cnd_id]]
+    x <- plot.mi.spcr::dataMids$mids[[cnd_id]]
 
     # Default arguments that you could change in MICE
     type <- "l"
@@ -61,7 +61,7 @@ plot_trace <- function(mids_data, method, npcs, iters = c(0, 25)) {
     colnames(data) <- c(".it", ".m", ".ms", varlist)
 
     # Create formula
-    formula <- as.formula(paste0(
+    formula <- stats::as.formula(paste0(
         paste0(varlist, collapse = "+"),
         "~.it|.ms"
     ))
