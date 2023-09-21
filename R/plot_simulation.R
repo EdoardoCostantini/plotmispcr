@@ -48,14 +48,14 @@ plot_simulation <- function(results, outcome, y_axis_range, parameter, variables
     # Filter the data as requested
     results_filtered <- results %>%
         filter(
-            nla == n_latent,
-            mech %in% na_mechanism,
-            pm %in% prop_na,
-            vars == variables,
-            stat == parameter,
-            method %in% method_vector,
-            npcs <= npc_range[2],
-            npcs >= npc_range[1]
+            .data$nla == n_latent,
+            .data$mech %in% na_mechanism,
+            .data$pm %in% prop_na,
+            .data$vars == variables,
+            .data$stat == parameter,
+            .data$method %in% method_vector,
+            .data$npcs <= npc_range[2],
+            .data$npcs >= npc_range[1]
         )
 
     # Make plot

@@ -19,6 +19,7 @@ Imports:
     mice,
     pkgload,
     shiny,
+    rlang,
     shinybrowser,
     shinyWidgets
 Suggests: 
