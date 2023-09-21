@@ -1,4 +1,4 @@
-# Project:   plot.mi.spcr
+# Project:   plotmispcr
 # Objective: container for data documentation
 # Author:    Edoardo Costantini
 # Created:   2022-12-01

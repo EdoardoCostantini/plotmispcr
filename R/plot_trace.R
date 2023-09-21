@@ -31,10 +31,10 @@ plot_trace <- function(mids_data, method, npcs, iters = c(0, 25)) {
         "npcs-", npcs,
         "-method-", method
     )
-    cnd_id <- grep(cnd_search, names(plot.mi.spcr::dataMids$mids))
+    cnd_id <- grep(cnd_search, names(plotmispcr::dataMids$mids))
 
     # Work with simple object name
-    x <- plot.mi.spcr::dataMids$mids[[cnd_id]]
+    x <- plotmispcr::dataMids$mids[[cnd_id]]
 
     # Default arguments that you could change in MICE
     type <- "l"
