@@ -2,23 +2,14 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7451802.svg)](https://doi.org/10.5281/zenodo.7451802)
 
-This is a repository to host the `ui.R` and `server.R` and input file required by a shiny dashboard to dynamically sort through the results of the simulation study performed [here](https://github.com/EdoardoCostantini/mi-spcr)
+An interactive dashboard to interact with the results of a research paper.
 
-You can interact with the results from the study [mi-spcr](https://github.com/EdoardoCostantini/mi-spcr) by:
-
-- Visit the online [shiny app](https://edoardocostantini.shinyapps.io/plotmispcr) to check out the simulation study results.
-- Installing this app locally as an R package to check the convergence plot as well:
-
-    ```
-    devtools::install_github("https://github.com/EdoardoCostantini/plotmispcr")
-    ```
-
-## Plots
+## Code Example
 
 To start the shiny apps and interact with the plots, open an R session and load the package:
 
 ```
-library("plotmipca")
+library("plot.mi.scpr")
 ```
 
 Then, run the following command in the R console:
@@ -27,38 +18,114 @@ Then, run the following command in the R console:
 plotResults()
 ```
 
-You can plot the results for the values of the following simulation study experimental factors:
+You can interact with the the shiny app also [online](https://edoardocostantini.shinyapps.io/plotmispcr).
 
-- Number of latent variables used to generate the data (2, 10, 50)
-- Proportion of missing values imposed on every variable (0.1, 0.25, 0.5)
-- Missing data mechanism imposed (MCAR, MAR)
-- Imputation methods (see names in the interface)
+## Motivation
 
-    - pcr: mice with principal component regression as univariate imputation method
-    - spcr: mice with supervised principal component regression as univariate imputation method
-    - plsr: mice with partial least squares regression as univariate imputation method
-    - pcovr: mice with principal covariates regression as univariate imputation method
-    - qp: mice with normal linear model with bootstrap as univariate imputation method and quickpred() used to select the predictors
-    - am: mice with normal linear model with bootstrap as univariate imputation method and the analysis model variables used as predictors
-    - all: mice with normal linear model with bootstrap as univariate imputation method and all available items used as predictors
-    - cc: complete case analysis
-    - fo: fully observed data (results if there had been no missing values)
+This Shiny app allows you to interact with the results of the research paper associated with the GitHub project: [Multiple imputation with the use of supervised principal component regression as a univariate imputation method](https://github.com/EdoardoCostantini/mi-spcr).
 
-- Number of principal components (depending on the number of latent variables used)
-- Outcome measure:
+## Installation
 
-    - RB: raw bias
-    - PRB: percent relative bias
-    - CIC: confidence interval coverage
-    - CIW: average confidence interval
-    - mcsd: Standard deviation of the estimate across the monte carlo simulations
+You can install the Shiny app as an R package by using one of the methods described below.
 
-- Statistic:
+### Install from GitHub
 
-    - cor: correlation between two items with missing values
-    - cov: covariance between two items with missing values
-    - cor: mean of an item with missing values
-    - cor: variance of an item with missing values
+1. Open an R session.
 
-- Variables considered
-- Zoom on the y-axis
+2. Install `devtools`, an R package that provides a way to install other R packages directly from GitHub. Run the following R command in the console:
+
+    ```
+    install.packages("devtools")
+    ```
+
+3. Run the following command:
+
+    ```
+    devtools::install_github("https://github.com/EdoardoCostantini/plotmispcr")
+    ```
+
+### Install from a local folder
+
+1. Download the package from GitHub or [Zenodo](https://doi.org/10.5281/zenodo.7451802).
+
+2. Unzip the package.
+
+3. Open an R session, and run the following command.
+
+    ```
+    install.packages(
+        "path to the folder containing the package",
+        repos = NULL,
+        type = "source"
+    )
+    ```
+
+    For example, on a Windows computer, this could be
+
+    ```
+    install.packages(
+        "C:/Users/Name/Downloads/plotmispcr/",
+        repos = NULL,
+        type = "source"
+    )
+    ```
+
+## Tests
+
+### Unit tests
+
+**Unit tests** to test whether the functions behave as expected. This tests are performed by using the `test()` fucntion from the `devtools` R package.
+The workflow is the one established by the `testthat` R package.
+To run these tests with any of these methods:
+
+- R console
+
+   1. Install the `devtools` R package, if you do not have it already.
+
+        ``` r
+        install.packages("devtools")
+        ```
+
+   2. Then, you can the test with the following command in the R console:
+
+        ``` r
+        devtools::test()
+        ```
+
+        or 
+
+        ``` r
+        devtools::check()
+        ```
+
+- Bash terminal
+
+    ```bash
+    R CMD check
+    ```
+
+## Contributors
+
+- [Edoardo Costantini](https://github.com/EdoardoCostantini)
+
+## License
+
+Copyright (c) 2023 Edoardo Costantini
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
