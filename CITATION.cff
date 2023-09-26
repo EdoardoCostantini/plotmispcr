@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Costantini"
+  given-names: "Edoardo"
+  orcid: "https://orcid.org/0000-0001-9581-9913"
+title: "plotmispcr"
+version: 2.0.2
+doi: 10.5281/zenodo.8367823
+date-released: 2023-09-21
+url: "https://github.com/EdoardoCostantini/plotmispcr"
