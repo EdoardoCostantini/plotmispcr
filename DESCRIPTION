@@ -1,6 +1,6 @@
 Package: plotmispcr
 Title: Plot mi-spcr results
-Version: 2.0.2
+Version: 2.0.3
 Authors@R: 
     person("Edoardo", "Costantini", , "e.costantini@tilburguniversity.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9581-9913"))
