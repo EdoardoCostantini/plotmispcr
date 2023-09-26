@@ -5,7 +5,7 @@ authors:
   given-names: "Edoardo"
   orcid: "https://orcid.org/0000-0001-9581-9913"
 title: "plotmispcr"
-version: 2.0.2
+version: 2.0.3
 doi: 10.5281/zenodo.8367823
-date-released: 2023-09-21
+date-released: 2023-09-26
 url: "https://github.com/EdoardoCostantini/plotmispcr"
