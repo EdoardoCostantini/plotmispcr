@@ -1,6 +1,6 @@
 # Shiny app: plot mi-spcr results
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7451802.svg)](https://doi.org/10.5281/zenodo.7451802)
+[![DOI](https://zenodo.org/badge/DOI/plotmispcr.svg)](https://doi.org/plotmispcr)
 
 An interactive dashboard to interact with the results of a research paper.
 
@@ -46,7 +46,7 @@ You can install the Shiny app as an R package by using one of the methods descri
 
 ### Install from a local folder
 
-1. Download the package from GitHub or [Zenodo](https://doi.org/10.5281/zenodo.7451802).
+1. Download the package from GitHub or [Zenodo](https://doi.org/plotmispcr).
 
 2. Unzip the package.
 
