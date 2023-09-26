@@ -3,3 +3,4 @@
 ^init\.R$
 ^deployment\.R$
 rsconnect/
+^CITATION\.cff$
