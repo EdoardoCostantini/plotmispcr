@@ -9,7 +9,7 @@ An interactive dashboard to interact with the results of a research paper.
 To start the shiny apps and interact with the plots, open an R session and load the package:
 
 ```
-library("plot.mi.scpr")
+library("plotmispcr")
 ```
 
 Then, run the following command in the R console:
