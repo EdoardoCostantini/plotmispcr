@@ -53,39 +53,47 @@ ui_call <- function() {
                                     <br>
                                     <br>"
                             ),
-                            radioButtons(
-                                inputId = "plot_sim_nla",
-                                label = "Number of latent variables",
-                                choices = sort(unique(plotmispcr::dataResults$nla)),
-                                selected = sort(unique(plotmispcr::dataResults$nla))[2],
-                                inline = FALSE
-                            ),
-                            checkboxGroupInput(
-                                inputId = "plot_sim_pm",
-                                label = "Proportion of missing values",
-                                choices = sort(unique(plotmispcr::dataResults$pm)),
-                                selected = sort(unique(plotmispcr::dataResults$pm))[3],
-                                inline = FALSE
-                            ),
-                            checkboxGroupInput("plot_sim_mech",
-                                "Missing data mechanism",
-                                inline = FALSE,
-                                choices = levels(plotmispcr::dataResults$mech),
-                                selected = levels(plotmispcr::dataResults$mech)[2]
-                            ),
-                            checkboxGroupInput("plot_sim_method",
-                                "Imputation methods to compare:",
-                                choices = levels(plotmispcr::dataResults$method)[-nlevels(plotmispcr::dataResults$method)],
-                                selected = levels(plotmispcr::dataResults$method)[c(1:4, 8)],
-                                inline = FALSE
-                            ),
-                            shinyWidgets::sliderTextInput(
-                                inputId = "plot_sim_npcs",
-                                label = "Number of PCs used for imputation",
-                                hide_min_max = TRUE,
-                                choices = sort(unique(plotmispcr::dataResults$npcs)),
-                                selected = range(plotmispcr::dataResults$npcs),
-                                grid = TRUE
+                            shiny::fluidRow(
+                                shiny::column(
+                                    width = 6,
+                                    radioButtons(
+                                        inputId = "plot_sim_nla",
+                                        label = "Number of latent variables",
+                                        choices = sort(unique(plotmispcr::dataResults$nla)),
+                                        selected = sort(unique(plotmispcr::dataResults$nla))[2],
+                                        inline = FALSE
+                                    ),
+                                    checkboxGroupInput(
+                                        inputId = "plot_sim_pm",
+                                        label = "Proportion of missing values",
+                                        choices = sort(unique(plotmispcr::dataResults$pm)),
+                                        selected = sort(unique(plotmispcr::dataResults$pm))[3],
+                                        inline = FALSE
+                                    ),
+                                    checkboxGroupInput("plot_sim_mech",
+                                        "Missing data mechanism",
+                                        inline = FALSE,
+                                        choices = levels(plotmispcr::dataResults$mech),
+                                        selected = levels(plotmispcr::dataResults$mech)[2]
+                                    ),
+                                ),
+                                shiny::column(
+                                    width = 6,
+                                    checkboxGroupInput("plot_sim_method",
+                                        "Imputation methods:",
+                                        choices = levels(plotmispcr::dataResults$method)[-nlevels(plotmispcr::dataResults$method)],
+                                        selected = levels(plotmispcr::dataResults$method)[c(1:4, 8)],
+                                        inline = FALSE
+                                    ),
+                                    shinyWidgets::sliderTextInput(
+                                        inputId = "plot_sim_npcs",
+                                        label = "Number of PCs used for imputation",
+                                        hide_min_max = TRUE,
+                                        choices = sort(unique(plotmispcr::dataResults$npcs)),
+                                        selected = range(plotmispcr::dataResults$npcs),
+                                        grid = TRUE
+                                    ),
+                                )
                             ),
                             selectInput(
                                 inputId = "plot_sim_y_axis",
