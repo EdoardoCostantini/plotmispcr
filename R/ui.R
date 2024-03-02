@@ -177,10 +177,12 @@ ui_call <- function() {
                                     <br>
                                     <br>"
                             ),
-                            selectInput("plot_case_method",
-                                "Imputation method:",
+                            radioButtons(
+                                inputId = "plot_case_method",
+                                label = "Imputation method:",
                                 choices = levels(plotmispcr::dataResults$method)[1:7],
-                                selected = levels(plotmispcr::dataResults$method)[1]
+                                selected = levels(plotmispcr::dataResults$method)[1],
+                                inline = FALSE
                             ),
                             selectInput(
                                 inputId = "plot_case_npcs",
