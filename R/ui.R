@@ -28,7 +28,7 @@ ui_call <- function() {
                             This Shiny app accompanies the paper:
                             <br>
                             <br>
-                            <a href=''>Costantini, E., Lang, K. M., Sijtsma, K., & Reeskens, T. (2022). Supervised dimensionality reduction for multiple imputation by chained equations. <i>coming soon</i>.</a>
+                            Costantini, E., Lang, K. M., Sijtsma, K. (2023). Supervised dimensionality reduction for multiple imputation by chained equations. <i>arXiv preprint arXiv:2309.01608.</i> DOI: <a href='https://doi.org/10.48550/arXiv.2309.01608'>10.48550/arXiv.2309.01608</a>
                             <br>
                             <br>
                             With this app, the user can:
