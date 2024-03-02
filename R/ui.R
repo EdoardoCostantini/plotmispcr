@@ -58,30 +58,30 @@ ui_call <- function() {
                                 label = "Number of latent variables",
                                 choices = sort(unique(plotmispcr::dataResults$nla)),
                                 selected = sort(unique(plotmispcr::dataResults$nla))[2],
-                                inline = TRUE
+                                inline = FALSE
                             ),
                             checkboxGroupInput(
                                 inputId = "plot_sim_pm",
                                 label = "Proportion of missing values",
                                 choices = sort(unique(plotmispcr::dataResults$pm)),
                                 selected = sort(unique(plotmispcr::dataResults$pm))[3],
-                                inline = TRUE
+                                inline = FALSE
                             ),
                             checkboxGroupInput("plot_sim_mech",
                                 "Missing data mechanism",
-                                inline = TRUE,
+                                inline = FALSE,
                                 choices = levels(plotmispcr::dataResults$mech),
                                 selected = levels(plotmispcr::dataResults$mech)[2]
                             ),
                             checkboxGroupInput("plot_sim_method",
                                 "Imputation methods to compare:",
-                                choices = levels(plotmispcr::dataResults$method),
+                                choices = levels(plotmispcr::dataResults$method)[-nlevels(plotmispcr::dataResults$method)],
                                 selected = levels(plotmispcr::dataResults$method)[c(1:4, 8)],
-                                inline = TRUE
+                                inline = FALSE
                             ),
                             shinyWidgets::sliderTextInput(
                                 inputId = "plot_sim_npcs",
-                                label = "Number of principal components",
+                                label = "Number of PCs used for imputation",
                                 hide_min_max = TRUE,
                                 choices = sort(unique(plotmispcr::dataResults$npcs)),
                                 selected = range(plotmispcr::dataResults$npcs),
@@ -90,7 +90,7 @@ ui_call <- function() {
                             selectInput(
                                 inputId = "plot_sim_y_axis",
                                 label = "Outcome measure",
-                                choices = c("RB", "PRB", "CIC", "CIW", "mcsd"),
+                                choices = c("PRB", "CIC", "CIW", "Raw bias"),
                                 selected = "PRB"
                             ),
                             shiny::fluidRow(
@@ -99,7 +99,7 @@ ui_call <- function() {
                                     radioButtons(
                                         inputId = "plot_sim_stat",
                                         label = "Statistic",
-                                        inline = TRUE,
+                                        inline = FALSE,
                                         choices = unique(plotmispcr::dataResults$stat)
                                     ),
                                 ),
@@ -108,7 +108,7 @@ ui_call <- function() {
                                     radioButtons(
                                         inputId = "plot_sim_vars",
                                         label = "Variables",
-                                        inline = TRUE,
+                                        inline = FALSE,
                                         choices = unique(plotmispcr::dataResults$vars)
                                     ),
                                 )
@@ -176,7 +176,7 @@ ui_call <- function() {
                             ),
                             selectInput(
                                 inputId = "plot_case_npcs",
-                                label = "Number of PCs used",
+                                label = "Number of PCs used for imputation",
                                 choices = sort(unique(plotmispcr::dataResults$npcs))[-1],
                                 selected = sort(unique(plotmispcr::dataResults$npcs))[2]
                             ),

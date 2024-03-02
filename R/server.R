@@ -30,7 +30,7 @@ server <- function(input, output, session) {
 
         updateRadioButtons(session,
             inputId = "plot_sim_vars",
-            inline = TRUE,
+            inline = FALSE,
             choices = choices_vars,
             selected = choices_vars[1]
         )
